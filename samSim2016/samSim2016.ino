@@ -1,6 +1,5 @@
 
 #include "Keyboard.h"
-#include "Mouse.h"
 
 const int Button01 = 2;
 const int Button02 = 3;
@@ -18,6 +17,9 @@ int buttonState04 = 0;
 int lastButtonState04 = 0;
 int buttonState05 = 0;
 int lastButtonState05 = 0;
+
+long lastDebounceTime = 0;
+long debounceDelay = 50;
 
 void setup() {
   pinMode(Button01, INPUT);
@@ -38,6 +40,7 @@ void loop() {
   buttonState05 = digitalRead(Button05);
 
   if ((buttonState01 != lastButtonState01) && (buttonState01 == HIGH)) {
+    delay(50);
     int words = random(10, 50);
     for (int j = 0; j < words; j++) {
       int lines = random(1, 10);
@@ -52,9 +55,20 @@ void loop() {
   lastButtonState01 = buttonState01;
 
   if ((buttonState02 != lastButtonState02) && (buttonState02 == HIGH)) {
+    delay(50);
     Keyboard.print("BM!\n");
     delay(50);
   }
   lastButtonState02 = buttonState02;
+
+  if ((buttonState03 != lastButtonState03) && (buttonState03 == HIGH)) {
+    delay(50);
+    Keyboard.press(KEY_LEFT_GUI);
+    Keyboard.press('l');
+    delay(100);
+    Keyboard.releaseAll();
+    delay(50);
+  }
+  lastButtonState03 = buttonState03;
 
 }
