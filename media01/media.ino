@@ -1,22 +1,18 @@
+#include "Media.h"
 
-#include "Keyboard.h"
-#include "Remote.h"
+//#define numButton  sizeof(button)
 
-
-const int button[] {3, 4, 5, 6, 7};
-
-#define numButton  sizeof(button)
+//int buttonState[numButton];
+//int lastButtonState[numButton];
 
 
-int buttonState[numButton];
-int lastButtonState[numButton];
+const int Button01 = 3;
+const int Button02 = 4;
+const int Button03 = 5;
+const int Button04 = 6;
+const int Button05 = 7;
 
-
-const int Button01 = 2;
-const int Button02 = 3;
-const int Button03 = 4;
-const int Button04 = 5;
-const int Button05 = 6;
+bool play = 0;
 
 int buttonState01 = 0;
 int lastButtonState01 = 0;
@@ -40,7 +36,6 @@ void setup() {
   pinMode(Button05, INPUT);
 
   Serial.begin(9600);
-  Keyboard.begin();
 }
 void loop() {
 
@@ -52,34 +47,41 @@ void loop() {
 
   if ((buttonState01 != lastButtonState01) && (buttonState01 == HIGH)) {
     delay(50);
-    int words = random(10, 50);
-    for (int j = 0; j < words; j++) {
-      int lines = random(1, 10);
-      for (int i = 0; i < lines; i ++) {
-        Keyboard.print("shoddy code ");
-      }
-      Keyboard.print(";\n");
-    }
-    Keyboard.print("\n");
+    Media.mute();
+    Media.clear();
     delay(50);
   }
   lastButtonState01 = buttonState01;
 
   if ((buttonState02 != lastButtonState02) && (buttonState02 == HIGH)) {
     delay(50);
-    Keyboard.print("BM!\n");
+    Media.next();
+    Media.clear();
     delay(50);
   }
   lastButtonState02 = buttonState02;
 
   if ((buttonState03 != lastButtonState03) && (buttonState03 == HIGH)) {
     delay(50);
-    Keyboard.press(KEY_LEFT_GUI);
-    Keyboard.press('l');
-    delay(100);
-    Keyboard.releaseAll();
+    Media.previous();
+    Media.clear();
     delay(50);
   }
   lastButtonState03 = buttonState03;
+
+  if ((buttonState04 != lastButtonState04) && (buttonState04 == HIGH)) {
+    delay(50);
+    Media.play();
+    Media.clear();
+    delay(50);
+  }
+  lastButtonState04 = buttonState04;
+
+  if ((buttonState05 != lastButtonState05) && (buttonState05 == HIGH)) {
+    delay(50);
+    delay(50);
+  }
+  lastButtonState05 = buttonState05;
+
 
 }
