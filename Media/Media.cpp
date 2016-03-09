@@ -27,11 +27,7 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
     0x09, 0xcd,                    //	Usage (Play)
     0x95, 0x01,                    //	Report Count (1)
     0x81, 0x06,                    //	Input (Data, Variable, Relative)
-/*
-	0x09, 0xcd,                    //	Usage (Play/Pause)
-    0x95, 0x01,                    //	Report Count (1)
-    0x81, 0x06,                    //	Input (Data, Variable, Relative)	
-	*/
+
     0x09, 0xb1,                    //	Usage (Pause)
     0x95, 0x01,                    //	Report Count (1)
     0x81, 0x06,                    //	Input (Data, Variable, Relative)
@@ -110,15 +106,7 @@ void Media_::play(void)
 	m[1] = 0;
 	HID().SendReport(4,m,2);
 }
- /*
-void Media_::playToggle(void)
-{
-    u8 m[2];
-    m[0] = MEDIA_PLAY_TOGGLE;
-    m[1] = 0;
-	HID().SendReport(4,m,2);
-}
- */
+
 void Media_::pause(void)
 {
 	u8 m[2];
