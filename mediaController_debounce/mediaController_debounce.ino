@@ -1,6 +1,5 @@
 #include <Bounce2.h>
 #include <Media.h>
-//#include <Keyboard.h>
 
 //declare array of buttons
 const int button[] = {7, 6, 5, 4, 3};
@@ -17,8 +16,8 @@ void setup() {
     debounce[i].attach(button[i]);
     debounce[i].interval(del);
   }
-//  Keyboard.begin();
 }
+
 void checkDebounce() {
   //update each debouncer i.e. check for presses
   for (int i = 0; i < sizeof(button); i ++) {
@@ -44,18 +43,16 @@ void loop() {
     Media.clear();
   }
 
-  if (debounce[3].fell() == HIGH) {
-    Media.mute();
+  if (debounce[3].read() == HIGH) {
+    Media.increase();
     Media.clear();
+    delay(100);
   }
 
-  if (debounce[4].fell() == HIGH) {
-//    delay(50);
-//    Keyboard.press(KEY_LEFT_GUI);
-//    Keyboard.press('l');
-//    delay(100);
-//    Keyboard.releaseAll();
-//    delay(50);
+  if (debounce[4].read() == HIGH) {
+    Media.decrease();
+    Media.clear();
+    delay(100);
   }
 
 }
