@@ -1,5 +1,10 @@
 #include <Bounce2.h>
 #include <Media.h>
+#include <SoftwareSerial.h>
+
+SoftwareSerial mySerial(8, 9); // RX, TX
+
+char myChar;
 
 //declare array of buttons
 const int button[] = {7, 6, 5, 4, 3};
@@ -7,8 +12,12 @@ const int button[] = {7, 6, 5, 4, 3};
 Bounce debounce[sizeof(button)];
 //declare interval for debouncers
 const int del = 5;
+const int volumeDelay = 50;
 
 void setup() {
+  Serial.begin(9600);
+  mySerial.begin(9600);
+
   //define buttons/bouncers attach a bouncer to each button
   for (int i = 0; i < sizeof(button); i++) {
     pinMode(button[i], INPUT);
@@ -24,35 +33,79 @@ void checkDebounce() {
     debounce[i].update();
   }
 }
+
+void play() {
+  Media.play();
+  Media.clear();
+}
+void prev() {
+  Media.previous();
+  Media.clear();
+}
+void next() {
+  Media.next();
+  Media.clear();
+
+}
+void up() {
+  Media.increase();
+  Media.clear();
+}
+void down() {
+  Media.decrease();
+  Media.clear();
+}
+
 void loop() {
 
   checkDebounce();
 
   if (debounce[0].fell() == HIGH) {
-    Media.previous();
-    Media.clear();
+    prev();
   }
 
   if (debounce[1].fell() == HIGH) {
-    Media.play();
-    Media.clear();
+    play();
   }
 
   if (debounce[2].fell() == HIGH) {
-    Media.next();
-    Media.clear();
+    next();
   }
 
   if (debounce[3].read() == HIGH) {
-    Media.increase();
-    Media.clear();
-    delay(100);
+    up();
+    delay(volumeDelay);
   }
 
   if (debounce[4].read() == HIGH) {
-    Media.decrease();
-    Media.clear();
-    delay(100);
+    down();
+    delay(volumeDelay);
+  }
+
+  while (mySerial.available()) {
+    myChar = mySerial.read();
+    Serial.print(myChar);
+
+    switch (myChar) {
+      case't':
+        play();
+        break;
+      case'p':
+        prev();
+        break;
+      case'n':
+        next();
+        break;
+      case'u':
+        up();
+        break;
+      case'd':
+        down();
+        break;
+      default:
+        break;
+    }
+    myChar = ' ';
   }
 
 }
