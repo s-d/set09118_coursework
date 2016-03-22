@@ -3,8 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="uk.co.sam.mediacontroller.MainActivity">
     <item
+        android:id="@+id/action_connect"
+        android:orderInCategory="0"
+        android:title="@string/action_connect"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_disconnect"
+        android:orderInCategory="1"
+        android:title="@string/action_disconnect"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
 </menu>
