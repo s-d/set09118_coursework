@@ -4,13 +4,21 @@ import android.app.Activity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.io.IOException;
+import java.util.Set;
 
 /**
  * Created by Sam Dixon on 22/03/2016.
@@ -18,59 +26,92 @@ import android.view.View;
 public class BluetoothHandler {
 
     private static final int REQUEST_ENABLE_BT = 1;
-    private BluetoothAdapter bluetoothAdapter;
-    private View view;
-    private Activity activity;
+    private BluetoothAdapter mBluetoothAdapter;
+    private View mView;
+    private Activity mActivity;
+    private String toConnectName;
+    private BluetoothDevice bonded;
+
 
     public BluetoothHandler(Activity activity, View view) {
-        this.view = view;
-        this.activity = activity;
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bluetoothAdapter == null) {
-            Snackbar.make(this.view, "Bluetooth unavailable on this device.", Snackbar.LENGTH_LONG).show();
+        this.mView = view;
+        this.mActivity = activity;
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        if (mBluetoothAdapter == null) {
+            Snackbar.make(this.mView, "Bluetooth unavailable on this device.", Snackbar.LENGTH_LONG).show();
         }
     }
 
     public boolean isEnabled() {
-        return bluetoothAdapter.isEnabled();
+        return mBluetoothAdapter.isEnabled();
     }
 
     public void enableBluetooth() {
         if (!isEnabled()) {
             Intent btOnIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            activity.startActivityForResult(btOnIntent, REQUEST_ENABLE_BT);
+            mActivity.startActivityForResult(btOnIntent, REQUEST_ENABLE_BT);
         }
     }
 
     protected void onActivityResult(int requestCode, int resultCode) {
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode != Activity.RESULT_OK) {
-                Snackbar.make(view, "Could not enable Bluetooth", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mView, "Could not enable Bluetooth", Snackbar.LENGTH_LONG).show();
             } else {
-                Log.v("bluetooth","paired devices");
-                showPairdDevices();
+                showPairedDialog();
             }
         }
     }
 
-    public void showPairdDevices() {
-        // Use the Builder class for convenient dialog construction
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("fire missiles?")
-                .setPositiveButton("fire", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
+    public void showPairedDialog() {
+        Log.d("bluetooth", "paired devices");
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        final LayoutInflater inflater = mActivity.getLayoutInflater();
+        final View dialogLayout = inflater.inflate(R.layout.paired_dialog, (ViewGroup) mActivity.findViewById(R.id.paired_dialog_list));
+        final ListView pairedListView = (ListView) dialogLayout.findViewById(R.id.paired_dialog_list);
+        final Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+        final ArrayAdapter<String> btArrayAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_list_item_1);
+
+        //dialog
+        builder.setTitle("Paired Devices");
+        builder.setView(dialogLayout);
+        pairedListView.setAdapter(btArrayAdapter);
+        for (BluetoothDevice device : pairedDevices) {
+            btArrayAdapter.add(device.getName());
+        }
+
+        builder.setNegativeButton(R.string.bluetooth_handler_paired_dialog, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+
+        final AlertDialog ad = builder.create();
+        pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                toConnectName = ((TextView) view).getText().toString();
+                Log.i("Clicked", toConnectName);
+                for (BluetoothDevice device : pairedDevices) {
+                    Log.i("Checking", device.getName());
+                    if (toConnectName.equals(device.getName())) {
+                        bonded = device;
+                        Log.i("BT Device Set", bonded.getName());
+                        ad.dismiss();
+//                        try {
+//                            btDeviceConnect(bonded);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                        break;
                     }
-                })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
-        // Create the AlertDialog object and return it
-        final android.support.v7.app.AlertDialog ad = builder.create();
+                }
+
+
+            }
+        });
         ad.show();
     }
 
 }
-

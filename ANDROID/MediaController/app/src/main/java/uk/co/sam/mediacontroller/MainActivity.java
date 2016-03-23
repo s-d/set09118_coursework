@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             //noinspection SimplifiableIfStatement
             case R.id.action_connect:
                 if (mBluetoothHandler.isEnabled()) {
-                    mBluetoothHandler.showPairdDevices();
+                    mBluetoothHandler.showPairedDialog();
                 } else {
                     mBluetoothHandler.enableBluetooth();
                 }

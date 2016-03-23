@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Media Controller</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_connect">Connect</string>
-    <string name="action_disconnect">Disconnect</string>
+    <string name="menu_main_action_settings">Settings</string>
+    <string name="menu_main_action_connect">Connect</string>
+    <string name="menu_main_action_disconnect">Disconnect</string>
+    <string name="bluetooth_handler_paired_dialog">Cancel</string>
 </resources>
