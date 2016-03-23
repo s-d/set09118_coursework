@@ -1,5 +1,6 @@
 package uk.co.sam.mediacontroller;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -12,9 +13,7 @@ import android.bluetooth.BluetoothAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
-    public BluetoothHandler bHandler;
-    private BluetoothAdapter mBluetoothAdapter;
-
+    public BluetoothHandler mBluetoothHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothHandler = new BluetoothHandler(this,toolbar);
     }
 
     @Override
@@ -41,11 +40,14 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             //noinspection SimplifiableIfStatement
             case R.id.action_connect:
-                if (mBluetoothAdapter == null) {
-                    Snackbar.make(this.findViewById(R.id.action_connect), "No Bluetooth for you.", Snackbar.LENGTH_LONG).show();
-                } else {
-                    Snackbar.make(this.findViewById(R.id.action_connect), "Bluetooth, son!", Snackbar.LENGTH_LONG).show();
-                }
+//                if (mBluetoothAdapter == null) {
+//                    Snackbar.make(this.findViewById(R.id.action_connect), "No Bluetooth available.", Snackbar.LENGTH_LONG).show();
+//                } else {
+//                    if (!mBluetoothAdapter.isEnabled()) {
+//                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+//                    }
+//                }
                 return true;
             case R.id.action_disconnect:
                 return true;
