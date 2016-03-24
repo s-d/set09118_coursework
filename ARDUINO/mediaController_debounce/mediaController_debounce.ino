@@ -87,19 +87,19 @@ void loop() {
     Serial.print(myChar);
 
     switch (myChar) {
-      case'0':
-        prev();
-        break;
-      case'1':
+      case't':
         play();
         break;
-      case'2':
+      case'p':
+        prev();
+        break;
+      case'n':
         next();
         break;
-      case'3':
+      case'u':
         up();
         break;
-      case'4':
+      case'd':
         down();
         break;
       default:

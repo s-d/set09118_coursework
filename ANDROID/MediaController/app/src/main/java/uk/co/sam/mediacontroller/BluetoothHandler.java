@@ -132,19 +132,22 @@ public class BluetoothHandler {
         ad.show();
     }
 
-
     void openBT() throws IOException {
+        final ProgressDialog progressDialog = ProgressDialog.show(mActivity, null, "Connecting to Media Controller", true);
+        progressDialog.show();
         mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
         mSocket.connect();
         mOutput = mSocket.getOutputStream();
+        progressDialog.dismiss();
+        MainActivity.enableButtons();
     }
-
 
     void disconnectDevice() {
         if (mSocket != null && mSocket.isConnected()) {
             try {
                 mOutput.close();
                 mSocket.close();
+                MainActivity.disableButtons();
                 Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();

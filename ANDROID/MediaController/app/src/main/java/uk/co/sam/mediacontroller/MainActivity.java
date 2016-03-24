@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +24,40 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ViewGroup layout = (ViewGroup) findViewById(R.id.main_layout);
+
+        final Button button0 = (Button) findViewById(R.id.main_button_0);
+        button0.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mBluetoothHandler.writeValue("p");
+            }
+        });
+        final Button button1 = (Button) findViewById(R.id.main_button_1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mBluetoothHandler.writeValue("t");
+            }
+        });
+        final Button button2 = (Button) findViewById(R.id.main_button_2);
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mBluetoothHandler.writeValue("n");
+            }
+        });
+        final Button button3 = (Button) findViewById(R.id.main_button_3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mBluetoothHandler.writeValue("u");
+            }
+        });
+        final Button button4 = (Button) findViewById(R.id.main_button_4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                mBluetoothHandler.writeValue("d");
+            }
+        });
+
         mButtons = new ArrayList<>();
+        ViewGroup layout = (ViewGroup) findViewById(R.id.main_layout);
         int childCount = layout.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = layout.getChildAt(i);
@@ -34,15 +65,20 @@ public class MainActivity extends AppCompatActivity {
                 mButtons.add((Button) child);
             }
         }
-
-
-//        int i = 1;
-//        for (Button button : mButtons) {
-//            button.setText("Button " + i);
-//            button.setEnabled(false);
-//            i++;
-//        }
+        disableButtons();
         mBluetoothHandler = new BluetoothHandler(this, toolbar);
+    }
+
+    public static void disableButtons() {
+        for (Button button : mButtons) {
+            button.setEnabled(false);
+        }
+    }
+
+    public static void enableButtons() {
+        for (Button button : mButtons) {
+            button.setEnabled(true);
+        }
     }
 
     @Override
@@ -85,12 +121,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static String prev = "t";
-    public void prev(View view) {
-        mBluetoothHandler.writeValue(prev);
-//            Snackbar.make(view, "Thing here", Snackbar.LENGTH_SHORT).show();
     }
 
 }

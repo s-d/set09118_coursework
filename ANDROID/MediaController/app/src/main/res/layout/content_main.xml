@@ -19,7 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="prev"
         android:text="Prev" />
 
 
@@ -28,7 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="toggle"
         android:text="Play/Pause" />
 
 
@@ -37,7 +35,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="next"
         android:text="Next" />
 
 
@@ -46,7 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="up"
         android:text="Vol Up" />
 
 
@@ -55,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:onClick="down"
         android:text="Vol Down" />
 
 
