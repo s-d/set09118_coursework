@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_disconnect:
                 if (mBluetoothHandler.isEnabled()) {
-                    mBluetoothHandler.closeBT();
+                    mBluetoothHandler.disconnectDevice();
                 } else {
                     Snackbar.make(findViewById(R.id.action_disconnect), "Thing here", Snackbar.LENGTH_SHORT).show();
                 }

@@ -2,6 +2,7 @@ package uk.co.sam.mediacontroller;
 
 import android.app.Activity;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -18,7 +19,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
@@ -35,7 +39,13 @@ public class BluetoothHandler {
     private BluetoothDevice mDevice;
     private BluetoothSocket mSocket;
     private OutputStream mOutput;
-    private UUID muuid = UUID.fromString("4b75e4e3-8d07-4c74-b83a-eff1de1f637b");
+    private UUID muuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    private static final String TAG = "BluetoothUtils";
+    private BufferedReader reader;
+    private static final String REQUIRED_DEVICE_NAME = "MEDIA_CONTROLLER";
+
+
+
 
     public BluetoothHandler(Activity activity, View view) {
         this.mView = view;
@@ -108,23 +118,34 @@ public class BluetoothHandler {
                         mDevice = device;
                         Log.i("BT Device Set", mDevice.getName());
                         ad.dismiss();
-//                        try {
-//                            btDeviceConnect(mDevice);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            openBT();
+                            Log.d("Bluetooth", "attempting connection");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.d("Bluetooth", "no worky");
+                        }
                         break;
                     }
                 }
-
-
             }
         });
         //display dialog
         ad.show();
     }
 
-    void closeBT() {
+
+    void openBT() throws IOException
+    {
+        mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
+        mSocket.connect();
+        mOutput = mSocket.getOutputStream();
+    }
+
+
+
+
+    void disconnectDevice() {
         if (mSocket != null && mSocket.isConnected()) {
             try {
                 mOutput.close();
