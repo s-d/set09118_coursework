@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -18,7 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * Created by Sam Dixon on 22/03/2016.
@@ -29,9 +32,10 @@ public class BluetoothHandler {
     private BluetoothAdapter mBluetoothAdapter;
     private View mView;
     private Activity mActivity;
-    private String toConnectName;
-    private BluetoothDevice bonded;
-
+    private BluetoothDevice mDevice;
+    private BluetoothSocket mSocket;
+    private OutputStream mOutput;
+    private UUID muuid = UUID.fromString("4b75e4e3-8d07-4c74-b83a-eff1de1f637b");
 
     public BluetoothHandler(Activity activity, View view) {
         this.mView = view;
@@ -66,6 +70,7 @@ public class BluetoothHandler {
     public void showPairedDialog() {
         Log.d("bluetooth", "paired devices");
 
+        //define various dialog attributes
         final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         final LayoutInflater inflater = mActivity.getLayoutInflater();
         final View dialogLayout = inflater.inflate(R.layout.paired_dialog, (ViewGroup) mActivity.findViewById(R.id.paired_dialog_list));
@@ -73,7 +78,7 @@ public class BluetoothHandler {
         final Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
         final ArrayAdapter<String> btArrayAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_list_item_1);
 
-        //dialog
+        //build dialog
         builder.setTitle("Paired Devices");
         builder.setView(dialogLayout);
         pairedListView.setAdapter(btArrayAdapter);
@@ -81,26 +86,30 @@ public class BluetoothHandler {
             btArrayAdapter.add(device.getName());
         }
 
+        //dialog cancel button
         builder.setNegativeButton(R.string.bluetooth_handler_paired_dialog, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
         });
 
+        //create  dialog
         final AlertDialog ad = builder.create();
+
+        //clickable list
         pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                toConnectName = ((TextView) view).getText().toString();
-                Log.i("Clicked", toConnectName);
+                String pairedName = ((TextView) view).getText().toString();
+                Log.i("Clicked", pairedName);
                 for (BluetoothDevice device : pairedDevices) {
                     Log.i("Checking", device.getName());
-                    if (toConnectName.equals(device.getName())) {
-                        bonded = device;
-                        Log.i("BT Device Set", bonded.getName());
+                    if (pairedName.equals(device.getName())) {
+                        mDevice = device;
+                        Log.i("BT Device Set", mDevice.getName());
                         ad.dismiss();
 //                        try {
-//                            btDeviceConnect(bonded);
+//                            btDeviceConnect(mDevice);
 //                        } catch (IOException e) {
 //                            e.printStackTrace();
 //                        }
@@ -111,7 +120,22 @@ public class BluetoothHandler {
 
             }
         });
+        //display dialog
         ad.show();
+    }
+
+    void closeBT() {
+        if (mSocket != null && mSocket.isConnected()) {
+            try {
+                mOutput.close();
+                mSocket.close();
+                Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Snackbar.make(mView, "Nothing to disconnect", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package uk.co.sam.mediacontroller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -52,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_disconnect:
-                return true;
+                if (mBluetoothHandler.isEnabled()) {
+                    mBluetoothHandler.closeBT();
+                } else {
+                    Snackbar.make(findViewById(R.id.action_disconnect), "Thing here", Snackbar.LENGTH_SHORT).show();
+                }
             case R.id.action_settings:
                 return true;
         }
