@@ -7,7 +7,7 @@ SoftwareSerial mySerial(8, 9); // RX, TX
 char myChar;
 
 //declare array of buttons
-const int button[] = {7, 6, 5, 4, 3};
+const int button[] = {3, 4, 5, 6, 7};
 //declare array of debouncers
 Bounce debounce[sizeof(button)];
 //declare interval for debouncers
@@ -87,19 +87,19 @@ void loop() {
     Serial.print(myChar);
 
     switch (myChar) {
-      case't':
-        play();
-        break;
-      case'p':
+      case'0':
         prev();
         break;
-      case'n':
+      case'1':
+        play();
+        break;
+      case'2':
         next();
         break;
-      case'u':
+      case'3':
         up();
         break;
-      case'd':
+      case'4':
         down();
         break;
       default:

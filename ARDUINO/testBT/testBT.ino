@@ -12,7 +12,7 @@ void setup()
   delay(5000);
   mySerial.print("AT");
   delay(5000);
-  mySerial.print("AT+NAMEMEDIA_CONTROLLER");
+  //mySerial.print("AT+NAMEMEDIA_CONTROLLER");
 
 }
 

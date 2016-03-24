@@ -45,8 +45,6 @@ public class BluetoothHandler {
     private static final String REQUIRED_DEVICE_NAME = "MEDIA_CONTROLLER";
 
 
-
-
     public BluetoothHandler(Activity activity, View view) {
         this.mView = view;
         this.mActivity = activity;
@@ -135,14 +133,11 @@ public class BluetoothHandler {
     }
 
 
-    void openBT() throws IOException
-    {
+    void openBT() throws IOException {
         mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
         mSocket.connect();
         mOutput = mSocket.getOutputStream();
     }
-
-
 
 
     void disconnectDevice() {
@@ -159,4 +154,13 @@ public class BluetoothHandler {
         }
     }
 
+    void writeValue(String val) {
+        try {
+            mOutput.write(val.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
 }

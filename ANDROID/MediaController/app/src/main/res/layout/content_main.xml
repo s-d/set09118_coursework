@@ -19,34 +19,44 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="one" />
+        android:onClick="prev"
+        android:text="Prev" />
+
 
     <Button
         android:id="@+id/main_button_1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="two" />
+        android:onClick="toggle"
+        android:text="Play/Pause" />
+
 
     <Button
         android:id="@+id/main_button_2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="three" />
+        android:onClick="next"
+        android:text="Next" />
+
 
     <Button
         android:id="@+id/main_button_3"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="four" />
+        android:onClick="up"
+        android:text="Vol Up" />
+
 
     <Button
         android:id="@+id/main_button_4"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="five" />
+        android:onClick="down"
+        android:text="Vol Down" />
+
 
 </LinearLayout>

@@ -5,28 +5,19 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.text.Layout;
 import android.view.View;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Set;
-
 
 public class MainActivity extends AppCompatActivity {
 
-
-    private ArrayList<Button> mButtons;
-
-    public BluetoothHandler mBluetoothHandler;
-
+    private static ArrayList<Button> mButtons;
+    private BluetoothHandler mBluetoothHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,30 +25,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
         ViewGroup layout = (ViewGroup) findViewById(R.id.main_layout);
-
         mButtons = new ArrayList<>();
         int childCount = layout.getChildCount();
-
-        for(int i = 0; i < childCount; i++){
-            View child  = layout.getChildAt(i);
-            if(child instanceof Button){
+        for (int i = 0; i < childCount; i++) {
+            View child = layout.getChildAt(i);
+            if (child instanceof Button) {
                 mButtons.add((Button) child);
             }
         }
 
-        int i = 1;
-        for (Button button : mButtons) {
-            button.setText("Button "+i);
-            button.setEnabled(false);
-            i++;
-        }
 
-
+//        int i = 1;
+//        for (Button button : mButtons) {
+//            button.setText("Button " + i);
+//            button.setEnabled(false);
+//            i++;
+//        }
         mBluetoothHandler = new BluetoothHandler(this, toolbar);
-
     }
 
     @Override
@@ -101,4 +86,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static String prev = "t";
+    public void prev(View view) {
+        mBluetoothHandler.writeValue(prev);
+//            Snackbar.make(view, "Thing here", Snackbar.LENGTH_SHORT).show();
+    }
+
 }
