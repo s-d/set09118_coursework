@@ -1,12 +1,14 @@
 package uk.co.sam.mediacontroller;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.text.Layout;
 import android.view.View;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -17,9 +19,14 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.Set;
 
+
 public class MainActivity extends AppCompatActivity {
 
+
     private ArrayList<Button> mButtons;
+
+    public BluetoothHandler mBluetoothHandler;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         ViewGroup layout = (ViewGroup) findViewById(R.id.main_layout);
 
@@ -47,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
             i++;
         }
 
+
+        mBluetoothHandler = new BluetoothHandler(this, toolbar);
+
     }
 
     @Override
@@ -54,6 +65,14 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            mBluetoothHandler.onActivityResult(requestCode, resultCode);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -65,9 +84,18 @@ public class MainActivity extends AppCompatActivity {
         switch (id) {
             //noinspection SimplifiableIfStatement
             case R.id.action_connect:
+                if (mBluetoothHandler.isEnabled()) {
+                    mBluetoothHandler.showPairedDialog();
+                } else {
+                    mBluetoothHandler.enableBluetooth();
+                }
                 return true;
             case R.id.action_disconnect:
-                return true;
+                if (mBluetoothHandler.isEnabled()) {
+                    mBluetoothHandler.disconnectDevice();
+                } else {
+                    Snackbar.make(findViewById(R.id.action_disconnect), "Thing here", Snackbar.LENGTH_SHORT).show();
+                }
             case R.id.action_settings:
                 return true;
         }
