@@ -157,10 +157,11 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //                return true;
             case R.id.action_disconnect:
+                Log.d("bluwtoothdiconnect",""+mBluetoothHandler.isConnected());
                 if (mBluetoothHandler.isConnected()) {
                     mBluetoothHandler.disconnectDevice();
                 } else {
-//                    Snackbar.make(findViewById(R.id.action_disconnect), "Thing here", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(this.findViewById(R.id.main_layout), "thing here", Snackbar.LENGTH_LONG).show();
                 }
             case R.id.action_settings:
                 hideButtons();
