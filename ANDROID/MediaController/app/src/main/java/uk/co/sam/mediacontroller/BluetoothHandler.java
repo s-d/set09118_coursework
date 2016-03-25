@@ -109,6 +109,9 @@ public class BluetoothHandler {
         pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final ProgressDialog progressDialog = ProgressDialog.show(mActivity, null, "Connecting to Media Controller", true);
+                progressDialog.show();
+
                 String pairedName = ((TextView) view).getText().toString();
                 Log.i("Clicked", pairedName);
                 for (BluetoothDevice device : pairedDevices) {
@@ -119,6 +122,7 @@ public class BluetoothHandler {
                         ad.dismiss();
                         try {
                             openBT();
+                            progressDialog.dismiss();
                             Log.d("Bluetooth", "attempting connection");
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -134,13 +138,11 @@ public class BluetoothHandler {
     }
 
     void openBT() throws IOException {
-        final ProgressDialog progressDialog = ProgressDialog.show(mActivity, null, "Connecting to Media Controller", true);
-        progressDialog.show();
+
         mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
         mSocket.connect();
         mOutput = mSocket.getOutputStream();
         mConnected = true;
-        progressDialog.dismiss();
         MainActivity.showButtons();
     }
 
@@ -161,9 +163,7 @@ public class BluetoothHandler {
     public void writeValue(String val) {
         try {
             mOutput.write(val.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
     }

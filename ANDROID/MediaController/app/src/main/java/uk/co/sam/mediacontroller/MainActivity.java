@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,15 +49,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         final Button button3 = (Button) findViewById(R.id.main_button_3);
-        button3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        button3.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
                 mBluetoothHandler.writeValue("volumeUp");
+                return false;
             }
         });
+
+
+
         final Button button4 = (Button) findViewById(R.id.main_button_4);
-        button4.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        button4.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
                 mBluetoothHandler.writeValue("volumeDown");
+                return false;
             }
         });
 
@@ -89,23 +95,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mOtherButtons.add(buttonConnect);
-//        disableButtons();
         hideButtons();
 
         mBluetoothHandler = new BluetoothHandler(this, toolbar);
     }
 
-//    public static void disableButtons() {
-//        for (Button button : mFunctionButtons) {
-//            button.setEnabled(false);
-//        }
-//    }
-//
-//    public static void enableButtons() {
-//        for (Button button : mFunctionButtons) {
-//            button.setEnabled(true);
-//        }
-//    }
+
 
     public static void hideButtons() {
         for (Button button : mFunctionButtons) {
@@ -157,11 +152,10 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //                return true;
             case R.id.action_disconnect:
-                Log.d("bluwtoothdiconnect",""+mBluetoothHandler.isConnected());
                 if (mBluetoothHandler.isConnected()) {
                     mBluetoothHandler.disconnectDevice();
                 } else {
-                    Snackbar.make(this.findViewById(R.id.main_layout), "thing here", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(this.findViewById(R.id.main_layout), "Nothing to disconnect", Snackbar.LENGTH_LONG).show();
                 }
             case R.id.action_settings:
                 hideButtons();
