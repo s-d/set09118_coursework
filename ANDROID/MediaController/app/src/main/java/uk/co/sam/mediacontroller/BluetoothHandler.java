@@ -19,10 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
@@ -40,15 +37,19 @@ public class BluetoothHandler {
     private BluetoothSocket mSocket;
     private OutputStream mOutput;
     private UUID muuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
-    private static final String TAG = "BluetoothUtils";
-    private BufferedReader reader;
-    private static final String REQUIRED_DEVICE_NAME = "MEDIA_CONTROLLER";
+    private static boolean mConnected = false;
+
+
+    public boolean isConnected() {
+        return mConnected;
+    }
 
 
     public BluetoothHandler(Activity activity, View view) {
         this.mView = view;
         this.mActivity = activity;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mConnected = false;
         if (mBluetoothAdapter == null) {
             Snackbar.make(this.mView, "Bluetooth unavailable on this device.", Snackbar.LENGTH_LONG).show();
         }
@@ -138,18 +139,18 @@ public class BluetoothHandler {
         mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
         mSocket.connect();
         mOutput = mSocket.getOutputStream();
+        mConnected = true;
         progressDialog.dismiss();
-        MainActivity.enableButtons();
+        MainActivity.showButtons();
     }
 
-    void disconnectDevice() {
-        if (mSocket != null && mSocket.isConnected()) {
+    public void disconnectDevice() {
+        if (mSocket.isConnected()) {
             try {
-                mOutput.close();
                 mSocket.close();
-                MainActivity.disableButtons();
                 Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
             } catch (IOException e) {
+                Log.d("bluetooth discon", "i am very sad"+e);
                 e.printStackTrace();
             }
         } else {
@@ -157,7 +158,7 @@ public class BluetoothHandler {
         }
     }
 
-    void writeValue(String val) {
+    public void writeValue(String val) {
         try {
             mOutput.write(val.getBytes());
         } catch (IOException e) {
