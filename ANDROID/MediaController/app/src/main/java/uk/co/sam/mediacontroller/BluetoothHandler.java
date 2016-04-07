@@ -111,7 +111,6 @@ public class BluetoothHandler {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final ProgressDialog progressDialog = ProgressDialog.show(mActivity, null, "Connecting to Media Controller", true);
                 progressDialog.show();
-
                 String pairedName = ((TextView) view).getText().toString();
                 Log.i("Clicked", pairedName);
                 for (BluetoothDevice device : pairedDevices) {
@@ -126,6 +125,8 @@ public class BluetoothHandler {
                             Log.d("Bluetooth", "attempting connection");
                         } catch (IOException e) {
                             e.printStackTrace();
+                            Snackbar.make(mView, "Could not connect", Snackbar.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                             Log.d("Bluetooth", "no worky");
                         }
                         break;
@@ -138,7 +139,6 @@ public class BluetoothHandler {
     }
 
     void openBT() throws IOException {
-
         mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
         mSocket.connect();
         mOutput = mSocket.getOutputStream();
@@ -152,7 +152,7 @@ public class BluetoothHandler {
                 mSocket.close();
                 Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
             } catch (IOException e) {
-                Log.d("bluetooth discon", "i am very sad"+e);
+                Log.d("bluetooth discon", "i am very sad" + e);
                 e.printStackTrace();
             }
         } else {
@@ -167,4 +167,5 @@ public class BluetoothHandler {
             e.printStackTrace();
         }
     }
+
 }

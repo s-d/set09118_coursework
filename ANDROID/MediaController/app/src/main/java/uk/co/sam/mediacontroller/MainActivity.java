@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
         final Button button4 = (Button) findViewById(R.id.main_button_4);
         button4.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -101,7 +100,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public static void hideButtons() {
         for (Button button : mFunctionButtons) {
             button.setVisibility(View.GONE);
@@ -143,14 +141,6 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
-            //noinspection SimplifiableIfStatement
-//            case R.id.action_connect:
-//                if (mBluetoothHandler.isEnabled()) {
-//                    mBluetoothHandler.showPairedDialog();
-//                } else {
-//                    mBluetoothHandler.enableBluetooth();
-//                }
-//                return true;
             case R.id.action_disconnect:
                 if (mBluetoothHandler.isConnected()) {
                     mBluetoothHandler.disconnectDevice();
@@ -173,9 +163,9 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
         if (mBluetoothHandler.isConnected()) {
-//            enableButtons();
+            showButtons();
         } else {
-//            disableButtons();
+            hideButtons();
         }
     }
 
