@@ -1,0 +1,96 @@
+\documentclass{article}
+
+\usepackage[a4paper,left=1in,right=1in,top=1in,bottom=1in,footskip=.25in]{geometry}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{afterpage}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{helvet}
+\usepackage{url}
+\usepackage{natbib}
+
+\setcitestyle{square}
+
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\pagestyle{fancy}
+
+\graphicspath{{./IMAGES/}}
+
+\lstset{
+	escapeinside={/*@}{@*/},
+	language=Java,	
+	basicstyle=\fontsize{8.5}{12}\selectfont,
+	numbers=left,
+	numbersep=2pt,    
+	xleftmargin=2pt,
+	frame=tb,
+	columns=fullflexible,
+	showstringspaces=false,
+	tabsize=4,
+	keepspaces=true,
+	showtabs=false,
+	showspaces=false,
+	morekeywords={inline,public,class,private,protected,struct},
+	captionpos=b,
+	lineskip=-0.4em,
+	aboveskip=10pt,
+	extendedchars=true,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	keywordstyle=\color[rgb]{0,0,1},
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\color[rgb]{0.627,0.126,0.941},
+}
+
+\title{Sensing Systems for Mobile Applications\\SET09118: Final Report}
+\author{40056761\\Edinburgh Napier University}
+\date{22-04-2016}
+\makeatletter
+\lhead{SET09118: Fianl Report}
+\rhead{40056761}
+
+
+\begin{document}
+		
+	\maketitle
+	
+	\section{Abstract}
+		\lipsum[1]
+		
+		this is me citing somthing  \cite{MR2373353}, bootiful \cite{www:www.sharelatex.com}
+				
+	\newpage
+		
+	\pagenumbering{arabic}
+		
+	\tableofcontents
+	
+	\newpage
+		
+	\section{Introduction}
+		\lipsum[2-4]
+	
+	\section{Design}
+		\lipsum[3-6]
+
+	\section{Implementation}
+		\lipsum[4-7]
+	
+	\section{Results}
+		\lipsum[6-8]
+	
+	\section{Future Work}
+		\lipsum[8-9]
+	
+	\section{Conclusion}
+		\lipsum[9-13]
+		
+		\bibliographystyle{ieeetr}
+		\bibliography{final}
+		
+\end{document}

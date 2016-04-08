@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothHandler = new BluetoothHandler(this, toolbar);
     }
 
-
     public static void hideButtons() {
         for (Button button : mFunctionButtons) {
             button.setVisibility(View.GONE);
