@@ -38,6 +38,7 @@ public class BluetoothHandler {
     private OutputStream mOutput;
     private UUID muuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private static boolean mConnected = false;
+    private ProgressDialog progress;
 
 
     public boolean isConnected() {
@@ -52,6 +53,7 @@ public class BluetoothHandler {
         mConnected = false;
         if (mBluetoothAdapter == null) {
             Snackbar.make(this.mView, "Bluetooth unavailable on this device.", Snackbar.LENGTH_LONG).show();
+
         }
     }
 
@@ -109,8 +111,6 @@ public class BluetoothHandler {
         pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final ProgressDialog progressDialog = ProgressDialog.show(mActivity, null, "Connecting to Media Controller", true);
-                progressDialog.show();
                 String pairedName = ((TextView) view).getText().toString();
                 Log.i("Clicked", pairedName);
                 for (BluetoothDevice device : pairedDevices) {
@@ -121,13 +121,10 @@ public class BluetoothHandler {
                         ad.dismiss();
                         try {
                             openBT();
-                            progressDialog.dismiss();
                             Log.d("Bluetooth", "attempting connection");
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Snackbar.make(mView, "Could not connect", Snackbar.LENGTH_LONG).show();
-                            progressDialog.dismiss();
-                            Log.d("Bluetooth", "no worky");
+                            Log.d("openBT", "failure");
                         }
                         break;
                     }
@@ -139,11 +136,21 @@ public class BluetoothHandler {
     }
 
     void openBT() throws IOException {
-        mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
-        mSocket.connect();
-        mOutput = mSocket.getOutputStream();
-        mConnected = true;
-        MainActivity.showButtons();
+        progress = ProgressDialog.show(mActivity, null, "Connecting to " + mDevice.getName(), true);
+
+        try {
+            mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
+            mSocket.connect();
+            mOutput = mSocket.getOutputStream();
+            mConnected = true;
+            progress.dismiss();
+            MainActivity.showButtons();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Snackbar.make(mView, mDevice.getName() + " connection failed", Snackbar.LENGTH_LONG).show();
+            Log.d("openBT", "no worky");
+            progress.dismiss();
+        }
     }
 
     public void disconnectDevice() {
@@ -152,7 +159,7 @@ public class BluetoothHandler {
                 mSocket.close();
                 Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
             } catch (IOException e) {
-                Log.d("bluetooth discon", "i am very sad" + e);
+                Log.d("disconnectDevice", "failed to disconnect" + e);
                 e.printStackTrace();
             }
         } else {

@@ -58,29 +58,29 @@ void down() {
 
 void loop() {
 
-  checkDebounce();
-
-  if (debounce[0].fell() == HIGH) {
-    prev();
-  }
-
-  if (debounce[1].fell() == HIGH) {
-    play();
-  }
-
-  if (debounce[2].fell() == HIGH) {
-    next();
-  }
-
-  if (debounce[3].read() == HIGH) {
-    up();
-    delay(volumeDelay);
-  }
-
-  if (debounce[4].read() == HIGH) {
-    down();
-    delay(volumeDelay);
-  }
+//  checkDebounce();
+//
+//  if (debounce[0].fell() == HIGH) {
+//    prev();
+//  }
+//
+//  if (debounce[1].fell() == HIGH) {
+//    play();
+//  }
+//
+//  if (debounce[2].fell() == HIGH) {
+//    next();
+//  }
+//
+//  if (debounce[3].read() == HIGH) {
+//    up();
+//    delay(volumeDelay);
+//  }
+//
+//  if (debounce[4].read() == HIGH) {
+//    down();
+//    delay(volumeDelay);
+//  }
 
   while (mySerial.available()) {
     myChar = mySerial.read();

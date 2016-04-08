@@ -33,34 +33,32 @@ public class MainActivity extends AppCompatActivity {
         final Button button0 = (Button) findViewById(R.id.main_button_0);
         button0.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mBluetoothHandler.writeValue("previousTrack");
+                mBluetoothHandler.writeValue("p");
             }
         });
         final Button button1 = (Button) findViewById(R.id.main_button_1);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mBluetoothHandler.writeValue("togglePlay");
+                mBluetoothHandler.writeValue("t");
             }
         });
         final Button button2 = (Button) findViewById(R.id.main_button_2);
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                mBluetoothHandler.writeValue("nextTrack");
+                mBluetoothHandler.writeValue("n");
             }
         });
         final Button button3 = (Button) findViewById(R.id.main_button_3);
         button3.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                mBluetoothHandler.writeValue("volumeUp");
+                mBluetoothHandler.writeValue("u");
                 return false;
             }
         });
-
-
         final Button button4 = (Button) findViewById(R.id.main_button_4);
         button4.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                mBluetoothHandler.writeValue("volumeDown");
+                mBluetoothHandler.writeValue("d");
                 return false;
             }
         });
