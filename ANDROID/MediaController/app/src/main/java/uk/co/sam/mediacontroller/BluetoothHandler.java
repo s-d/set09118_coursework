@@ -19,6 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
@@ -36,7 +37,8 @@ public class BluetoothHandler {
     private BluetoothDevice mDevice;
     private BluetoothSocket mSocket;
     private OutputStream mOutput;
-    private UUID muuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+    private static final UUID MY_UUID = UUID
+            .fromString("00001101-0000-1000-8000-00805f9b34fb");
     private static boolean mConnected = false;
     private ProgressDialog progress;
 
@@ -57,15 +59,17 @@ public class BluetoothHandler {
         }
     }
 
-    public boolean isEnabled() {
-        return mBluetoothAdapter.isEnabled();
-    }
-
     public void enableBluetooth() {
         if (!isEnabled()) {
             Intent btOnIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             mActivity.startActivityForResult(btOnIntent, REQUEST_ENABLE_BT);
+        } else {
+            //do nothing
         }
+    }
+
+    public boolean isEnabled() {
+        return mBluetoothAdapter.isEnabled();
     }
 
     protected void onActivityResult(int requestCode, int resultCode) {
@@ -79,33 +83,39 @@ public class BluetoothHandler {
     }
 
     public void showPairedDialog() {
-        Log.d("bluetooth", "paired devices");
-
+        enableBluetooth();
         //define various dialog attributes
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity);
         final LayoutInflater inflater = mActivity.getLayoutInflater();
-        final View dialogLayout = inflater.inflate(R.layout.paired_dialog, (ViewGroup) mActivity.findViewById(R.id.paired_dialog_list));
-        final ListView pairedListView = (ListView) dialogLayout.findViewById(R.id.paired_dialog_list);
-        final Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
-        final ArrayAdapter<String> btArrayAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_list_item_1);
+        final View dialogLayout =
+                inflater.inflate(R.layout.paired_dialog,
+                        (ViewGroup) mActivity.findViewById(R.id.paired_dialog_list));
+        final ListView pairedListView = (ListView) dialogLayout
+                .findViewById(R.id.paired_dialog_list);
+        final Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
+                .getBondedDevices();
+        final ArrayAdapter<String> btArrayAdapter =
+                new ArrayAdapter<>(mActivity, android.R.layout.simple_list_item_1);
 
         //build dialog
-        builder.setTitle("Paired Devices");
-        builder.setView(dialogLayout);
+        dialogBuilder.setTitle("Paired Devices");
+        dialogBuilder.setView(dialogLayout);
         pairedListView.setAdapter(btArrayAdapter);
         for (BluetoothDevice device : pairedDevices) {
             btArrayAdapter.add(device.getName());
         }
 
         //dialog cancel button
-        builder.setNegativeButton(R.string.bluetooth_handler_paired_dialog, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
+        dialogBuilder.setNegativeButton(R.string.bluetooth_handler_paired_dialog,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
 
         //create  dialog
-        final AlertDialog ad = builder.create();
+        final AlertDialog ad = dialogBuilder.create();
 
         //clickable list
         pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,11 +130,11 @@ public class BluetoothHandler {
                         Log.i("BT Device Set", mDevice.getName());
                         ad.dismiss();
                         try {
-                            openBT();
+                            connectDevice();
                             Log.d("Bluetooth", "attempting connection");
                         } catch (IOException e) {
                             e.printStackTrace();
-                            Log.d("openBT", "failure");
+                            Log.d("connectDevice", "failure");
                         }
                         break;
                     }
@@ -135,23 +145,50 @@ public class BluetoothHandler {
         ad.show();
     }
 
-    void openBT() throws IOException {
+    void connectDevice() throws IOException {
         progress = ProgressDialog.show(mActivity, null, "Connecting to " + mDevice.getName(), true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mSocket = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
+                    mSocket.connect();
+                    mOutput = mSocket.getOutputStream();
+                    mConnected = true;
+                    progress.dismiss();
+                    Snackbar.make(mView, "Connected successful", Snackbar.LENGTH_SHORT).show();
 
-        try {
-            mSocket = mDevice.createRfcommSocketToServiceRecord(muuid);
-            mSocket.connect();
-            mOutput = mSocket.getOutputStream();
-            mConnected = true;
-            progress.dismiss();
-            MainActivity.showButtons();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Snackbar.make(mView, mDevice.getName() + " connection failed", Snackbar.LENGTH_LONG).show();
-            Log.d("openBT", "no worky");
-            progress.dismiss();
-        }
+                    mActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            MainActivity.showButtons();
+
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("connectDevice", "no worky");
+                    progress.dismiss();
+                    mConnected = false;
+
+                    Snackbar snack = Snackbar.make(mView, "Connection failed", Snackbar.LENGTH_LONG);
+                    snack.setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                connectDevice();
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+                    });
+                    snack.show();
+                }
+            }
+        }).start();
     }
+
 
     public void disconnectDevice() {
         if (mSocket.isConnected()) {
