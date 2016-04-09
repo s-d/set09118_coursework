@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_disconnect:
-                if (mBluetoothHandler.isConnected()) {
+                if (mBluetoothHandler.getMSocket().isConnected()) {
                     mBluetoothHandler.disconnectDevice();
                 } else {
                     Snackbar.make(this.findViewById(R.id.main_layout), "Nothing to disconnect", Snackbar.LENGTH_LONG).show();
@@ -154,16 +154,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();  // Always call the superclass method first
+        mBluetoothHandler.disconnectDevice();
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        if (mBluetoothHandler.isConnected()) {
-            showButtons();
-        } else {
-            hideButtons();
-        }
+        hideButtons();
     }
 
 }

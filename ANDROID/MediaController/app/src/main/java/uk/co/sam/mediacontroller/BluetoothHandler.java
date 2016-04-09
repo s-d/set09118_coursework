@@ -1,7 +1,6 @@
 package uk.co.sam.mediacontroller;
 
 import android.app.Activity;
-
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -18,8 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
@@ -35,24 +32,26 @@ public class BluetoothHandler {
     private View mView;
     private Activity mActivity;
     private BluetoothDevice mDevice;
+
+    public BluetoothSocket getMSocket() {
+        return mSocket;
+    }
+
+    public void setMSocket(BluetoothSocket mSocket) {
+        this.mSocket = mSocket;
+    }
+
     private BluetoothSocket mSocket;
     private OutputStream mOutput;
     private static final UUID MY_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805f9b34fb");
-    private static boolean mConnected = false;
     private ProgressDialog progress;
-
-
-    public boolean isConnected() {
-        return mConnected;
-    }
 
 
     public BluetoothHandler(Activity activity, View view) {
         this.mView = view;
         this.mActivity = activity;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mConnected = false;
         if (mBluetoothAdapter == null) {
             Snackbar.make(this.mView, "Bluetooth unavailable on this device.", Snackbar.LENGTH_LONG).show();
 
@@ -154,7 +153,6 @@ public class BluetoothHandler {
                     mSocket = mDevice.createRfcommSocketToServiceRecord(MY_UUID);
                     mSocket.connect();
                     mOutput = mSocket.getOutputStream();
-                    mConnected = true;
                     progress.dismiss();
                     Snackbar.make(mView, "Connected successful", Snackbar.LENGTH_SHORT).show();
 
@@ -170,7 +168,6 @@ public class BluetoothHandler {
                     e.printStackTrace();
                     Log.d("connectDevice", "no worky");
                     progress.dismiss();
-                    mConnected = false;
 
                     Snackbar snack = Snackbar.make(mView, "Connection failed", Snackbar.LENGTH_LONG);
                     snack.setAction("Retry", new View.OnClickListener() {
@@ -188,7 +185,6 @@ public class BluetoothHandler {
             }
         }).start();
     }
-
 
     public void disconnectDevice() {
         if (mSocket.isConnected()) {
