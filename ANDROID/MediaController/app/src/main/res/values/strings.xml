@@ -4,4 +4,5 @@
     <string name="menu_main_action_connect">Connect</string>
     <string name="menu_main_action_disconnect">Disconnect</string>
     <string name="bluetooth_handler_paired_dialog">Cancel</string>
+    <string name="main_activity_connect_button">Connect to Media Controller</string>
 </resources>

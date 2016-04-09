@@ -2,6 +2,7 @@ package uk.co.sam.mediacontroller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static ArrayList<Button> mFunctionButtons;
     private static ArrayList<Button> mOtherButtons;
-
     private BluetoothHandler mBluetoothHandler;
 
     @Override
@@ -31,41 +31,83 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         final Button button0 = (Button) findViewById(R.id.main_button_0);
+        assert button0 != null;
         button0.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mBluetoothHandler.writeValue("p");
             }
         });
         final Button button1 = (Button) findViewById(R.id.main_button_1);
+        assert button1 != null;
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mBluetoothHandler.writeValue("t");
             }
         });
         final Button button2 = (Button) findViewById(R.id.main_button_2);
+        assert button2 != null;
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mBluetoothHandler.writeValue("n");
             }
         });
         final Button button3 = (Button) findViewById(R.id.main_button_3);
+        assert button3 != null;
         button3.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                mBluetoothHandler.writeValue("u");
+            private Handler mHandler;
+            @Override public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 500);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
                 return false;
             }
+            Runnable mAction = new Runnable() {
+                @Override public void run() {
+                    mBluetoothHandler.writeValue("u");
+                    mHandler.postDelayed(this, 50);
+                }
+            };
         });
         final Button button4 = (Button) findViewById(R.id.main_button_4);
+        assert button4 != null;
         button4.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                mBluetoothHandler.writeValue("d");
+            private Handler mHandler;
+            @Override public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 500);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
                 return false;
             }
+            Runnable mAction = new Runnable() {
+                @Override public void run() {
+                    mBluetoothHandler.writeValue("d");
+                    mHandler.postDelayed(this, 50);
+                }
+            };
         });
 
         mFunctionButtons = new ArrayList<>();
         mOtherButtons = new ArrayList<>();
         ViewGroup layout = (ViewGroup) findViewById(R.id.main_button_layout);
+        assert layout != null;
         int childCount = layout.getChildCount();
         for (int i = 0; i < childCount; i++) {
             View child = layout.getChildAt(i);
@@ -76,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
 
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
         final Button buttonConnect = new Button(this);
-        buttonConnect.setText("Connect to Media Controller");
+        buttonConnect.setText(R.string.main_activity_connect_button);
+        assert mainLayout != null;
         mainLayout.addView(buttonConnect);
         RelativeLayout.LayoutParams layoutParams =
                 (RelativeLayout.LayoutParams) buttonConnect.getLayoutParams();
@@ -139,14 +182,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_disconnect:
-                if (mBluetoothHandler.getMSocket().isConnected()) {
                     mBluetoothHandler.disconnectDevice();
-                } else {
-                    Snackbar.make(this.findViewById(R.id.main_layout), "Nothing to disconnect", Snackbar.LENGTH_LONG).show();
-                }
             case R.id.action_settings:
-                hideButtons();
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }

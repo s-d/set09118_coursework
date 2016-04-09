@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Set;
@@ -32,15 +33,6 @@ public class BluetoothHandler {
     private View mView;
     private Activity mActivity;
     private BluetoothDevice mDevice;
-
-    public BluetoothSocket getMSocket() {
-        return mSocket;
-    }
-
-    public void setMSocket(BluetoothSocket mSocket) {
-        this.mSocket = mSocket;
-    }
-
     private BluetoothSocket mSocket;
     private OutputStream mOutput;
     private static final UUID MY_UUID = UUID
@@ -187,13 +179,21 @@ public class BluetoothHandler {
     }
 
     public void disconnectDevice() {
-        if (mSocket.isConnected()) {
-            try {
-                mSocket.close();
-                Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                Log.d("disconnectDevice", "failed to disconnect" + e);
-                e.printStackTrace();
+        if (mSocket != null) {
+            if (mSocket.isConnected()) {
+                try {
+                    mOutput.close();
+                    mSocket.close();
+                    Snackbar.make(mView, "Disconnected from " + mDevice.getName(), Snackbar.LENGTH_SHORT).show();
+                    MainActivity.hideButtons();
+
+                } catch (IOException e) {
+                    Log.d("disconnectDevice", "failed to disconnect" + e);
+                    e.printStackTrace();
+
+                }
+            } else {
+                Snackbar.make(mView, "Nothing to disconnect", Snackbar.LENGTH_SHORT).show();
             }
         } else {
             Snackbar.make(mView, "Nothing to disconnect", Snackbar.LENGTH_SHORT).show();
