@@ -10,6 +10,10 @@
 \usepackage{float}
 \usepackage{helvet}
 \usepackage{url}
+\usepackage[toc,page]{appendix}
+\usepackage[final]{pdfpages}
+\usepackage[hidelinks]{hyperref}
+
 
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -47,7 +51,7 @@
 \author{40056761\\SET09118\\Edinburgh Napier University}
 \date{22-04-2016}
 \makeatletter
-\lhead{SET09118: Fianl Report}
+\lhead{SET09118: Final Report}
 \rhead{40056761}
 
 
@@ -56,7 +60,7 @@
 	\maketitle
 	
 	\section{Abstract}
-		This document is the final report and a conclusion to the "USB/Bluetooth Media Controller" project started in February. The purpose of this project was to research, construct and evaluate a micro-controller based system, and mobile application, that would allow a user to communicate with a media device via more intuitive methods. 
+		This document is the final report and a conclusion to the "USB/Bluetooth Media Controller" project started in February [Appendix \ref{IPP}] [Appendix \ref{Interim}]. The purpose of this project was to research, construct and evaluate a micro-controller based system and mobile application, that would allow a user to communicate with a media device via more intuitive methods.
 				
 	\newpage
 		
@@ -64,38 +68,67 @@
 		
 	\tableofcontents
 	
+	\listoffigures
+	
+	\listoftables
+	
+	\lstlistoflistings
+		
 	\newpage
 		
 	\section{Introduction}
 		\subsection{Background and Rational}
+			\lipsum[1]
 		
 		\subsection{Aims and Deliverables}
+			\lipsum[1]
 	
 	\section{Design}
 		\subsection{Physical System Design}
+			\lipsum[1]
 		
 		\subsection{Mobile Application Design}
+			\lipsum[1]
 
 	\section{Implementation}
 		\subsection{Micro-controller Implementation}
-
+			\lipsum[1]
+			
 		\subsection{Mobile Application Implementation}
-	
+			\lipsum[1]
+			
 	\section{Results}
 		\subsection{Achievements}
-
+			\lipsum[1]
+			
 		\subsection{Recommendations}
-		
+			\lipsum[1]
+			
 	\section{Future Work}
-
+		\lipsum[1]
 	
 	\section{Conclusion}
-
+		\lipsum[1]
 		
 	\section{Evaluation of Achievement}
-		
+		\lipsum[1]
 		
 	\bibliographystyle{ieeetran}
+	
 	\bibliography{final}
-		
+
+	\newpage
+
+	\begin{appendices}
+		\section{Initial Project Proposal} \label{IPP}
+		\begin{center}
+			\includegraphics[scale = 0.8, page = 1]{../IPP/SET09118_IPP.pdf}
+		\end{center}
+		\includepdf[scale = 0.8, pages = 2-,pagecommand={}]{../IPP/SET09118_IPP.pdf}
+	
+		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Interim Report}\label{Interim}]{../INTERIM/SET09118_INTERIM.pdf}
+		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../INTERIM/SET09118_INTERIM.pdf}
+		 		
+	\end{appendices}
+
 \end{document}
