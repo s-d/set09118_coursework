@@ -4,8 +4,6 @@
 
 static const uint8_t _hidReportDescriptor[] PROGMEM = {
   
-  //-----------------------------------------------------------------------------
-
     /* Cross-platform support for controls found on IR Medias */
 
     0x05, 0x0c,                    //	Usage Page (Consumer Devices)
@@ -56,10 +54,6 @@ static const uint8_t _hidReportDescriptor[] PROGMEM = {
     0x81, 0x07,                    //	Input (Constant, Variable, Relative) 
     0xc0                           //	End Collection
 };
-
-//================================================================================
-//================================================================================
-//	Media
  
 Media_::Media_(void)
 {

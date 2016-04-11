@@ -1,0 +1,12 @@
+Usage ID,Usage Name,Usage Type
+0xCD,Play/Pause,OSC
+0xB0,Play,OOC
+0xB1,Pause,OOC
+0xB3,Fast Forward,OOC
+0xB4,Rewind,OOC
+0xB5,Scan Next Track,OSC
+0xB6,Scan Previous Track,OSC
+0xB7,Stop,OSC
+0xE2,Mute,OOC
+0xE9,Volume Increment,RTC
+0xEA,Volume Decrement,RTC

@@ -15,6 +15,8 @@
 \usepackage[hidelinks]{hyperref}
 
 
+
+
 \renewcommand{\familydefault}{\sfdefault}
 
 \pagestyle{fancy}
@@ -24,7 +26,7 @@
 \lstset{
 	escapeinside={/*@}{@*/},
 	language=Java,	
-	basicstyle=\fontsize{8.5}{12}\selectfont,
+	basicstyle=\ttfamily\fontsize{8.5}{12},
 	numbers=left,
 	numbersep=2pt,    
 	xleftmargin=2pt,
@@ -86,6 +88,27 @@
 	\section{Design}
 		\subsection{Physical System Design}
 			\lipsum[1]
+			
+			\begin{table}[h]
+				\centering
+				\caption{A usage table of the HID commands utilized by the media-controller}
+				\label{my-label}
+				\begin{tabular}{|r|r|r|}
+					\hline
+					\multicolumn{1}{|l|}{Usage ID} & \multicolumn{1}{l|}{Usage Name} & \multicolumn{1}{l|}{Usage Type} \\ \hline
+					0xCD                           & Play/Pause                      & OSC                             \\
+					0xB0                           & Play                            & OOC                             \\
+					0xB1                           & Pause                           & OOC                             \\
+					0xB3                           & Fast Forward                    & OOC                             \\
+					0xB4                           & Rewind                          & OOC                             \\
+					0xB5                           & Scan Next Track                 & OSC                             \\
+					0xB6                           & Scan Previous Track             & OSC                             \\
+					0xB7                           & Stop                            & OSC                             \\
+					0xE2                           & Mute                            & OOC                             \\
+					0xE9                           & Volume Increment                & RTC                             \\
+					0xEA                           & Volume Decrement                & RTC                             \\ \hline
+				\end{tabular}
+			\end{table}
 		
 		\subsection{Mobile Application Design}
 			\lipsum[1]
@@ -120,14 +143,32 @@
 	\newpage
 
 	\begin{appendices}
-		\section{Initial Project Proposal} \label{IPP}
-		\begin{center}
-			\includegraphics[scale = 0.8, page = 1]{../IPP/SET09118_IPP.pdf}
-		\end{center}
-		\includepdf[scale = 0.8, pages = 2-,pagecommand={}]{../IPP/SET09118_IPP.pdf}
+
+		\section{Arduino Media-Controller Source Code}
+			\lstinputlisting[caption = mediaController\_debounce.ino, nolol]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\newpage
+			
+		\section{Arduino Media Key Library}
+			\lstinputlisting[title = Media.h, nolol]{../../ARDUINO/Media/Media.h}
+			\newpage
+			\lstinputlisting[title = Media.cpp, nolol]{../../ARDUINO/Media/Media.cpp}
+			\newpage
+			
+		\section{Android Application Source code}
+			\lstinputlisting[title = MainActivity.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
+			\newpage
+			
+			\lstinputlisting[title = BluetoothHandler.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
+			\newpage
+					
+		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Initial Project Proposal}\label{IPP}]{../IPP/SET09118_IPP.pdf}
+		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../IPP/SET09118_IPP.pdf}
+		\newpage
 	
 		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Interim Report}\label{Interim}]{../INTERIM/SET09118_INTERIM.pdf}
 		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../INTERIM/SET09118_INTERIM.pdf}
+		\newpage	
+
 		 		
 	\end{appendices}
 
