@@ -58,8 +58,8 @@
 		
 	\maketitle
 	
-	\section{Abstract}
-		This document is the final report and a conclusion to the "USB/Bluetooth Media Controller" project started in February [Appendix \ref{IPP}] [Appendix \ref{Interim}]. The purpose of this project was to research, construct and evaluate a micro-controller based system and mobile application, that would allow a user to communicate with a media device via more intuitive methods.
+	\section*{Abstract}	
+		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix \ref{IPP}] [Appendix \ref{Interim}]. The goal of the project was to research, develop and evaluate a micro-controller based system and mobile application.		
 				
 	\newpage
 		
@@ -77,10 +77,26 @@
 		
 	\section{Introduction}
 		\subsection{Background and Rational}
-			\lipsum[1]
-		
+			The goal for this project was to produce a system that would allow users to interact with their PC media in a more intuitive manner. From tape cassettes to compact discs and finally to digital MP3 files, the way in which media is stored and experienced had changed dramatically over the last twenty years but the way that user interact with their media has remained stagnant.
+			
+			While playing or pausing media, changing track or altering volume are typically not difficult tasks for users, it can often be complicated when other applications are in use. Many companies have attempted to solve this issue by incorporating media control keys into keyboards, however these buttons are often in hard to reach locations or only work with specific applications.
+			
+			For the reasons mentioned above, it is clear that a independent media-controller, that supports a multitude of media application would be a popular device for many PC fanatics. One of the key deliverables of this project is the aforementioned media controller, the other is a companion mobile application to control the device remotely.
+					
 		\subsection{Aims and Deliverables}
-			\lipsum[1]
+			As stated previously, the two major deliverables discussed in this report are; a micro-controller based media controller and an Android mobile application to control said device. The aim of both deliverables is to simplify the way a user interacts with media, and this was a major consideration for design and implementation of the systems.
+			
+			In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, the real world is not as fair, and limitations must be imposed to keep implementation time reasonable.
+			\begin{itemize}
+				\item Function on a PC with a Windows operating system
+				\item Media application support for Google Play Music
+			\end{itemize}			
+			
+			
+
+%			constraint = external
+%			limitation = self imposed 
+
 	
 	\section{Design}
 		\subsection{Physical System Design}
