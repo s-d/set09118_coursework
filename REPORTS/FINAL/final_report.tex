@@ -86,12 +86,30 @@
 		\subsection{Aims and Deliverables}
 			As stated previously, the two major deliverables discussed in this report are; a micro-controller based media controller and an Android mobile application to control said device. The aim of both deliverables is to simplify the way a user interacts with media, and this was a major consideration for design and implementation of the systems.
 			
-			In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, the real world is not as fair, and limitations must be imposed to keep implementation time reasonable.
-			\begin{itemize}
-				\item Function on a PC with a Windows operating system
-				\item Media application support for Google Play Music
-			\end{itemize}			
-			
+			In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable.
+			MoSCoW was used to determine what was within scope of the project implementation.
+
+			\paragraph{MoSCoW}\label{MoSCoW}
+				\noindent\\
+				\textbf{Must:}
+					\begin{itemize}
+						\item Media controller functionality on a PC running a Windows operating system
+						\item Media key support for the Google Play Music application
+					\end{itemize}			
+				\textbf{Should:}
+					\begin{itemize}
+						\item Not require proprietary code running on PC to execute commands
+					\end{itemize}
+				\textbf{Could:}
+					\begin{itemize}
+						\item No configuration required, plug-n-play support
+						\item Support for additional host devices
+						\item Support for additional media applications
+					\end{itemize}
+				\textbf{Won't:}
+					\begin{itemize}
+						\item IOS or Windows Phone support
+					\end{itemize}
 			
 
 %			constraint = external
