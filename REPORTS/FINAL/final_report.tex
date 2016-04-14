@@ -18,7 +18,7 @@
 
 \pagestyle{fancy}
 
-\graphicspath{{./IMAGES/}}
+\graphicspath{{../IMAGES/}}
 
 \lstset{
 	escapeinside={/*@}{@*/},
@@ -59,7 +59,7 @@
 	\maketitle
 	
 	\section*{Abstract}	
-		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix \ref{IPP}] [Appendix \ref{Interim}]. The goal of the project was to research, develop and evaluate a micro-controller based system and mobile application.		
+		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix \ref{IPP}] [Appendix \ref{Interim}]. The goal of the project was to research, develop and evaluate a micro-controller based system and mobile application. \cite{ArduinoGit:online}
 				
 	\newpage
 		
@@ -87,14 +87,16 @@
 			As stated previously, the two major deliverables discussed in this report are; a micro-controller based media controller and an Android mobile application to control said device. The aim of both deliverables is to simplify the way a user interacts with media, and this was a major consideration for design and implementation of the systems.
 			
 			\paragraph{Media Controller}
-				The Media controller is a device that can be connected to a PC via USB, and provide users with a physical interface to interact with their media. 
+				The Media controller is a device that can be connected to a PC via USB, and provide users with a simple,  physical interface with which to interact with their media. 
 				
 				In terms of functionality, the controller will provide users with the ability to play or pause their music, skip to the next or previous track and raise or lower the volume of the music. These functions are accessible through a set of push buttons, providing tactile feedback to the user.
 				
 				Media controllers come in a wide variety of designs, consisting of rows of buttons, sliders, rotary-knobs and switches. For the purposes of this project, the media controller produced will be a bare-bones, bread-board prototype. All the functionality of finished controller will be present, but the ascetics of the device will be very "DIY".
 			
 			\paragraph{Mobile Application}
-				The Android application was designed to abstract any complexity required 
+				The media controller was designed to abstract media functions into the simplest interface possible, the Android application attempts to do the same.
+				
+				The goal of the applications appearance was to keep it as minimal as possible. The reason for this was to ensure the application's design was appealing and keep it as easy-to-use as possible.
 							
 			\paragraph{Limitations}
 				In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW was used to determine what was within scope of the project implementation.
@@ -154,6 +156,7 @@
 		\subsection{Mobile Application Design}
 			\lipsum[1]
 
+
 	\section{Implementation}
 		\subsection{Micro-controller Implementation}
 			\lipsum[1]
@@ -177,6 +180,8 @@
 	\section{Evaluation of Achievement}
 		\lipsum[1]
 		
+	\addcontentsline{toc}{section}{References}
+			
 	\bibliographystyle{ieeetran}
 	
 	\bibliography{final}
@@ -200,7 +205,15 @@
 			\newpage
 			
 			\lstinputlisting[title = BluetoothHandler.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
-			\newpage
+			
+			
+		\section{Bluetooth Connection Activity Diagram}
+			\begin{figure}[H]
+				\centering
+				\label{AppBtActivity}
+				\includegraphics*[scale = 0.75]{applicationConnectionActivity}
+				\title{\\An activity diagram depicting the mobile application Bluetooth connection process.}
+			\end{figure}
 					
 		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Initial Project Proposal}\label{IPP}]{../IPP/SET09118_IPP.pdf}
 		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../IPP/SET09118_IPP.pdf}
