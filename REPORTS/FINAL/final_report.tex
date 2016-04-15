@@ -60,6 +60,8 @@
 	
 	\section*{Abstract}	
 		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix \ref{IPP}] [Appendix \ref{Interim}]. The goal of the project was to research, develop and evaluate a micro-controller based system and mobile application. \cite{ArduinoGit:online}
+	
+	\pagenumbering{gobble}
 				
 	\newpage
 		
@@ -91,21 +93,23 @@
 				
 				In terms of functionality, the controller will provide users with the ability to play or pause their music, skip to the next or previous track and raise or lower the volume of the music. These functions are accessible through a set of push buttons, providing tactile feedback to the user.
 				
-				Media controllers come in a wide variety of designs, consisting of rows of buttons, sliders, rotary-knobs and switches. For the purposes of this project, the media controller produced will be a bare-bones, bread-board prototype. All the functionality of finished controller will be present, but the ascetics of the device will be very "DIY".
+				Media controllers come in a wide variety of designs, consisting of rows of buttons, sliders, rotary-knobs and switches. For the purposes of this project, the media controller produced will be a bare-bones, bread-board prototype.
 			
 			\paragraph{Mobile Application}
 				The media controller was designed to abstract media functions into the simplest interface possible, the Android application attempts to do the same.
 				
-				The goal of the applications appearance was to keep it as minimal as possible. The reason for this was to ensure the application's design was appealing and keep it as easy-to-use as possible.
+				The goal of the application's appearance was to keep it as minimal as possible. The reason for this was to ensure the application's design was appealing and keep it as easy-to-use as possible.
+				
+				In terms of functionality, the Android application will offer a user the same PC media functions as the physical controller, but via a remote, digital interface.
 							
 			\paragraph{Limitations}
-				In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW was used to determine what was within scope of the project implementation.
+				In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW was used to determine what was within scope of the project.
 
 			\paragraph{MoSCoW}\label{MoSCoW}
 				\noindent\\
 				\textbf{Must:}
 					\begin{itemize}
-						\item Media controller functionality on a PC running a Windows operating system
+						\item Media controller functionality on a PC running Windows operating system
 						\item Media key support for the Google Play Music application
 					\end{itemize}			
 				\textbf{Should:}
@@ -122,12 +126,7 @@
 					\begin{itemize}
 						\item IOS or Windows Phone support
 					\end{itemize}
-			
-
-%			constraint = external
-%			limitation = self imposed 
-
-	
+				
 	\section{Design}
 		\subsection{Physical System Design}
 			\lipsum[1]

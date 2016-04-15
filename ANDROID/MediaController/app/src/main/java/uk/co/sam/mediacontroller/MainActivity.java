@@ -3,10 +3,8 @@ package uk.co.sam.mediacontroller;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -128,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mBluetoothHandler.isEnabled()) {
-                    mBluetoothHandler.showPairedDialog();
+                    mBluetoothHandler.showPairedDevicesDialog();
                 } else {
                     mBluetoothHandler.enableBluetooth();
                 }
@@ -176,14 +174,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
             case R.id.action_disconnect:
                     mBluetoothHandler.disconnectDevice();
-            case R.id.action_settings:
         }
         return super.onOptionsItemSelected(item);
     }
