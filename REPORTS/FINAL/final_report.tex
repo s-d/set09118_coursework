@@ -137,38 +137,22 @@
 		\subsection{Media-controller Design}
 			While it was a simple task to specify what functionality the media-controller would have, it proved much harder to determine the way in which it would be delivered.
 			
-			\paragraph{Key press scripts}Preliminary research indicated that a common method of allowing a micro-controller execute commands on a PC was through "man-in-the-middle" scripts, such AutoHotkey \cite{AutoHotkey:online} or AutoIt \cite{AutoIt:online}. These programs would be run on a computer, intercept signals from a connected micro-controller and execute the requested command as a simulated keystroke.
-			
-			While key scripts did provide a solution, they did come with major flaws; Firstly, key scripts would only work with media applications that already support keyboard short-cuts and secondly, the MoSCoW method produced for this project (Section~\ref{MoSCoW}, Page~\pageref{MoSCoW}) stated that propriety programs should be avoided if possible.
-			
+			\paragraph{Key press scripts}
+			Preliminary research indicated that a common method of allowing a micro-controller to execute commands on a PC was through "man-in-the-middle" scripts, such AutoHotkey \cite{AutoHotkey:online} or AutoIt \cite{AutoIt:online}. These programs would be run on a computer, intercept signals from a connected micro-controller and execute the requested command as a simulated keystroke.
+			While key scripts would be usable, they did come with major flaws; Firstly, key scripts would only work with media applications that already support keyboard short-cuts and secondly, the MoSCoW method produced for this project (Section~\ref{MoSCoW}, Page~\pageref{MoSCoW}) stated that propriety programs should be avoided if possible.
 			When it was determined that Key press scripts would offer only a partial solution to the project, further research was taken to find a superior method.
 			
-			\paragraph{Human Interface Devices}Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table \cite{HIDUsagePage:online} to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everthing from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
+			\paragraph{Human Interface Devices}
+			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table \cite{HIDUsagePage:online} to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everthing from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
 			
-			\begin{figure}[]
-				\centering
-				\label{fullSystem}
-				{\includegraphics*[scale = 0.5]{fullSystem}}
-				\caption{The completed media-controller consisting of; micro-controller, Bluetooth module and push-button panel.}
-			\end{figure}
+			\paragraph{Micro-controller}
+			With the discovery of usage tables in mind, a suitable microcontroler had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that Arduin Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno the Leonardo can interact with a PC as A HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
 			
-			\begin{figure}[]
-				\centering
-				\label{leonardo}
-				{\includegraphics*[scale = 0.15]{leonardo}}
-				\caption{//ToDo - Write a caption}
-			\end{figure}
-			
-			\begin{figure}[]
-				\centering
-				\label{breadboard}
-				{\includegraphics*[scale = 0.15]{breadboard}}
-				\caption{//ToDo - Write a caption}
-			\end{figure}
-		
 		\subsection{Mobile Application Design}
+			The premise for the mobile application was simple, to allow a user to access the functions of the media-controller remotely, and as such the overall ascetic of the application was designed to be simple as well. The most challenging segment of the applications desiring was determine how it would communicate with the micro-controller.
+			
 			\lipsum[1]
-
+			
 
 	\section{Implementation}
 		\subsection{Media-controller Implementation}
@@ -213,6 +197,34 @@
 		
 	\section{Evaluation of Achievement}
 		\lipsum[1]
+		
+	\begin{figure}[]
+		\centering
+		\label{fullSystem}
+		{\includegraphics[scale = 0.5]{fullSystem}}
+		\caption{The completed media-controller consisting of; micro-controller, Bluetooth module and push-button panel.}
+	\end{figure}
+	
+	\begin{figure}[]
+		\centering
+		\label{leonardo}
+		{\includegraphics[scale = 0.15]{leonardo}}
+		\caption{//ToDo - Write a caption}
+	\end{figure}
+	
+	\begin{figure}[]
+		\centering
+		\label{breadboard}
+		{\includegraphics[scale = 0.15]{breadboard}}
+		\caption{//ToDo - Write a caption}
+	\end{figure}
+	
+	\begin{figure}[]
+		\centering
+		\label{mediaController_schem}
+		{\includegraphics{mediaController_schem}}
+		\caption{//ToDo - Write a caption}
+	\end{figure}
 		
 	\addcontentsline{toc}{section}{References}
 			
