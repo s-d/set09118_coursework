@@ -63,8 +63,8 @@
 	
 		%This document is an interim report summarising the current state of the “USB / Bluetooth Media Controller”. The project consists of the research, development and testing of a microcontroller based media controller and a companion mobile application. The purpose of this report is to catalogue the project’s various stages of development and to describe future action.
 				
-	\pagenumbering{gobble}
-				
+	\pagenumbering{gobble}	
+	
 	\newpage
 		
 	\pagenumbering{arabic}
@@ -146,12 +146,35 @@
 			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table \cite{HIDUsagePage:online} to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everthing from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
 			
 			\paragraph{Micro-controller}
-			With the discovery of usage tables in mind, a suitable microcontroler had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that Arduin Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno the Leonardo can interact with a PC as A HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
+			With the discovery of usage tables in mind, a suitable micro-controller had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that the Arduino Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno, the Leonardo can interact with a PC as A HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
 			
+			
+		\newpage
+		
+		
 		\subsection{Mobile Application Design}
-			The premise for the mobile application was simple, to allow a user to access the functions of the media-controller remotely, and as such the overall ascetic of the application was designed to be simple as well. The most challenging segment of the applications desiring was determine how it would communicate with the micro-controller.
+			The premise for the mobile application was simple, to allow a user to access the functions of the media-controller remotely, and as such the overall ascetic of the application was designed to be simplistic as well. The most challenging portion of the application's design stage was determining how the application would communicate with the micro-controller.
 			
-			\lipsum[1]
+			\paragraph{Remote Serial Communication}
+			Preliminary research indicated that two major technologies existed to communicate serial signals over-the-air namely; Bluetooth and Wi-Fi. A simplified breakdown of each standard is presented in Table~\ref{btWiFiComparison}.
+			
+			\begin{table}[h]
+				\centering
+				\caption{A comparison of two wireless communication technologies}
+				\label{btWiFiComparison}
+				\begin{tabular}{|r|r|r|r|r|r|}
+					\hline
+					\multicolumn{1}{|l|}{Technology} & \multicolumn{1}{l|}{Range} & \multicolumn{1}{l|}{Frequency} & \multicolumn{1}{l|}{Data Rate} & \multicolumn{1}{l|}{Power Use} & \multicolumn{1}{l|}{Cost} \\ \hline
+					Bluetooth 2.0                    & $\sim$100m                 & 2.4 GHz                        & 1-3 Mbit/s                     & Medium                         & Low                       \\
+					Wi-Fi 802.11g                     & $\sim$100m                 & 2.4 GHz                        & 54 Mbit/s                      & High                           & Medium                    \\ \hline
+				\end{tabular}
+			\end{table}
+			
+			\noindent
+			As can be seen from the table, both technologies offer similar benefits and either could be used in the final system. In the end it was decided tat Bluetooth would be they most suitable medium, due to its lower cost and previous/personal experience using the technology. To finalise this decision, a HC-06 Bluetooth module \cite{HC06DataSheet:online} was purchased to allow the media controller to transmit a Bluetooth signal.
+			
+			\paragraph{Bluetooth Communication}
+			While Bluetooth is a relatively simple technology in terms of use, it still must be correctly configured to ensure expected functionality. A activity diagram of the Bluetooth connection process [Appendix~\ref{AppBtActivity}] was created to ensure that the application's communication procedure was well documented and implemented correctly.
 			
 
 	\section{Implementation}
