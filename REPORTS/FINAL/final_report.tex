@@ -22,28 +22,28 @@
 
 \lstset{
 	escapeinside={/*@}{@*/},
-	language=Java,	
-	basicstyle=\ttfamily\fontsize{8.5}{12},
-	numbers=left,
-	numbersep=2pt,    
-	xleftmargin=2pt,
-	frame=tb,
-	columns=fullflexible,
-	showstringspaces=false,
-	tabsize=4,
-	keepspaces=true,
-	showtabs=false,
-	showspaces=false,
-	morekeywords={inline,public,class,private,protected,struct},
-	captionpos=b,
-	lineskip=-0.4em,
-	aboveskip=10pt,
-	extendedchars=true,
-	breaklines=true,
+	language = Java,	
+	basicstyle = \ttfamily\fontsize{8.5}{12},
+	numbers = left,
+	numbersep = 2pt,    
+	xleftmargin = 2pt,
+	frame = tb,
+	columns = fullflexible,
+	showstringspaces = false,
+	tabsize = 4,
+	keepspaces = true,
+	showtabs = false,
+	showspaces = false,
+	morekeywords = {inline,public,class,private,protected,struct},
+	captionpos = b,
+	lineskip = -0.4em,
+	aboveskip = 10pt,
+	extendedchars = true,
+	breaklines = true,
 	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-	keywordstyle=\color[rgb]{0,0,1},
-	commentstyle=\color[rgb]{0.133,0.545,0.133},
-	stringstyle=\color[rgb]{0.627,0.126,0.941},
+	keywordstyle = \color[rgb]{0,0,1},
+	commentstyle = \color[rgb]{0.133,0.545,0.133},
+	stringstyle = \color[rgb]{0.627,0.126,0.941},
 }
 
 \title{USB/Bluetooth Media Controller\\Final Report}
@@ -135,7 +135,7 @@
 				
 	\section{Design}
 		\subsection{Media-controller Design}
-			While it was a simple task to specify what functionality the media-controller would have, it proved much harder to determine the way in which it would be delivered.
+			While it was a simple task to specify what functionality the media-controller would have, it proved much harder to determine the way in which it would be delivered. 
 			
 			\paragraph{Key press scripts}
 			Preliminary research indicated that a common method of allowing a micro-controller to execute commands on a PC was through "man-in-the-middle" scripts, such AutoHotkey \cite{AutoHotkey:online} or AutoIt \cite{AutoIt:online}. These programs would be run on a computer, intercept signals from a connected micro-controller and execute the requested command as a simulated keystroke.
@@ -143,14 +143,19 @@
 			When it was determined that Key press scripts would offer only a partial solution to the project, further research was taken to find a superior method.
 			
 			\paragraph{Human Interface Devices}
-			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table \cite{HIDUsagePage:online} to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everthing from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
-			
+			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table \cite{HIDUsagePage:online} to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everything from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
+							
 			\paragraph{Micro-controller}
 			With the discovery of usage tables in mind, a suitable micro-controller had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that the Arduino Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno, the Leonardo can interact with a PC as A HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
 			
-			
-		\newpage
+			\begin{figure}[]
+				\centering
+				\label{mediaController_schem}
+				{\includegraphics{mediaController_schem}}
+				\caption{A circuit diagram of the finished media-controller}
+			\end{figure}
 		
+		\newpage
 		
 		\subsection{Mobile Application Design}
 			The premise for the mobile application was simple, to allow a user to access the functions of the media-controller remotely, and as such the overall ascetic of the application was designed to be simplistic as well. The most challenging portion of the application's design stage was determining how the application would communicate with the micro-controller.
@@ -176,10 +181,22 @@
 			\paragraph{Bluetooth Communication}
 			While Bluetooth is a relatively simple technology in terms of use, it still must be correctly configured to ensure expected functionality. A activity diagram of the Bluetooth connection process [Appendix~\ref{AppBtActivity}] was created to ensure that the application's communication procedure was well documented and implemented correctly.
 			
+			\paragraph{User Interface}
+			As previously stated, the goal of the applications interface was to keep as simple as possible. Wire frames were produced to prototype potential layouts. In the end a simple panel of vertical buttons was chosen for its ease of use and minimalistic style.\\
+			
+			\noindent
+			//put in some figures of wire frames
 
 	\section{Implementation}
 		\subsection{Media-controller Implementation}
-			\lipsum[1]
+			With the knowledge that HID usage commands would be the most feasible way to complete the project the creation of a bespoke, media usage table was begun. However, to complete the implementation further examples of usage tables were required.
+			
+			By examining Arduino's default mouse and keyboard HID library's \cite{ArduinoGit:online} and utilizing information from the USB Implementers Forum \cite{USBHID:online} it became clear how to implement a usage table as an Arduino library. With the usage table implemented, it still had to be filled with the relevant hexadecimal codes.
+				
+			\paragraph{Hexadecimal Codes}
+			A three year-old personal blog post that had previously been dismissed for being too outdated was able to provided a sample Usage Table with a host of different media commands \cite{MediaBlog:online}. The post in question had been analysed as potential solution to the project during the initial research phase. However, due to the age of the post and the fact the code was designed to interact with an IDE fourteen iterations out of date (at time of writing), it was deemed unusable. Even a brief conversation on the official Arduino IRC channel with a lead developer determined that the libraries needed to get the blog code running again were no longer available in the Arduino IDE.\\
+			
+			While the majority of the hex codes presented in the Blog's table were usable, a few were depreicated and would not work. In order to get the 
 			
 			\begin{table}[h]
 				\centering
@@ -241,13 +258,8 @@
 		{\includegraphics[scale = 0.15]{breadboard}}
 		\caption{//ToDo - Write a caption}
 	\end{figure}
-	
-	\begin{figure}[]
-		\centering
-		\label{mediaController_schem}
-		{\includegraphics{mediaController_schem}}
-		\caption{//ToDo - Write a caption}
-	\end{figure}
+			
+	\newpage	
 		
 	\addcontentsline{toc}{section}{References}
 			
