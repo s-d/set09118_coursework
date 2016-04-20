@@ -60,9 +60,7 @@
 	
 	\section*{Abstract}	
 		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix~\ref{IPP}] [Appendix~\ref{Interim}]. The goal of the project was to research, develop and evaluate a micro-controller based system and mobile application. The purpose of this report is to catalogue the project’s various stages, suggest future work and assert the overall success of the assignment.
-	
-		%This document is an interim report summarising the current state of the “USB / Bluetooth Media Controller”. The project consists of the research, development and testing of a microcontroller based media controller and a companion mobile application. The purpose of this report is to catalogue the project’s various stages of development and to describe future action.
-				
+					
 	\pagenumbering{gobble}	
 	
 	\newpage
@@ -70,6 +68,8 @@
 	\pagenumbering{arabic}
 		
 	\tableofcontents
+	
+	\newpage 
 	
 	\listoffigures
 	
@@ -107,7 +107,7 @@
 				In terms of functionality, the Android application will offer a user the same PC media functions as the physical controller, but via a remote, digital interface.
 							
 			\paragraph{Limitations}
-				In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW was used to determine what was within scope of the project.
+				In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW method was utilized to determine what was within scope of the project.
 
 			\begin{minipage}{\textwidth}\label{MoSCoW}
 				\paragraph{MoSCoW}
@@ -143,19 +143,17 @@
 			When it was determined that Key press scripts would offer only a partial solution to the project, further research was taken to find a superior method.
 			
 			\paragraph{Human Interface Devices}
-			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table \cite{HIDUsagePage:online} to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everything from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
+			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everything from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
 							
 			\paragraph{Micro-controller}
-			With the discovery of usage tables in mind, a suitable micro-controller had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that the Arduino Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno, the Leonardo can interact with a PC as A HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
+			With the discovery of usage tables in mind, a suitable micro-controller had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that the Arduino Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno, the Leonardo can interact with a PC as a HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
 			
 			\begin{figure}[]
 				\centering
 				\label{mediaController_schem}
 				{\includegraphics{mediaController_schem}}
-				\caption{A circuit diagram of the finished media-controller}
+				\caption{A circuit diagram of the proposed media-controller}
 			\end{figure}
-		
-		\newpage
 		
 		\subsection{Mobile Application Design}
 			The premise for the mobile application was simple, to allow a user to access the functions of the media-controller remotely, and as such the overall ascetic of the application was designed to be simplistic as well. The most challenging portion of the application's design stage was determining how the application would communicate with the micro-controller.
@@ -193,12 +191,14 @@
 			
 			By examining Arduino's default mouse and keyboard HID library's \cite{ArduinoGit:online} and utilizing information from the USB Implementers Forum \cite{USBHID:online} it became clear how to implement a usage table as an Arduino library. With the usage table implemented, it still had to be filled with the relevant hexadecimal codes.
 				
-			\paragraph{Hexadecimal Codes}
-			A three year-old personal blog post that had previously been dismissed for being too outdated was able to provided a sample Usage Table with a host of different media commands \cite{MediaBlog:online}. The post in question had been analysed as potential solution to the project during the initial research phase. However, due to the age of the post and the fact the code was designed to interact with an IDE fourteen iterations out of date (at time of writing), it was deemed unusable. Even a brief conversation on the official Arduino IRC channel with a lead developer determined that the libraries needed to get the blog code running again were no longer available in the Arduino IDE.\\
+			\paragraph{Usage Codes}
+			A three year-old personal blog post that had previously been dismissed for being too outdated was able to provided a sample Usage Table with a host of different media commands \cite{MediaBlog:online}. The post in question had been analysed as potential solution to the project during the initial research phase. However, due to the age of the post and the fact the code was designed to interact with an IDE fourteen iterations out of date (at time of writing), it was deemed unusable. Even a brief conversation on the official Arduino IRC channel with a lead developer determined that the libraries needed to get the blog code running again were no longer available in the Arduino IDE.
+					
+			While the majority of the hex codes presented in the blog's table were usable, a few were depreciated and no longer worked. The USB Implementers Forum once again provided the answer in the form of a PDF with all the current in use hex codes \cite{HIDUsagePage:online}.
 			
-			While the majority of the hex codes presented in the Blog's table were usable, a few were depreicated and would not work. In order to get the 
+			The usage codes used in the finished device are visible in Table~\ref{usageTable}, an example of how they appear in the source code is seen in [Appendix~\ref{mediacpp}]. 
 			
-			\begin{table}[h]
+			\begin{table}[]
 				\centering
 				\caption{A usage table of the HID commands utilized by the media-controller}
 				\label{usageTable}
@@ -219,8 +219,39 @@
 				\end{tabular}
 			\end{table}
 			
+			\paragraph{Push Buttons}
+			Once the media library was implemented they had to be made accessible to the user. This was done through the use of an open source Arduino button library called Bounce2 \cite{Bounce2Git:online}. The reason for using a external library was to ensure that any electrical "noise" or interference would not cause the micro-controller to register a single button press as multiple, calling a media function several times when a user only wanted to use it once.
+			
+			Once the buttons had been made foolproof, it was a simple matter of having each button call a command from the media library, see Listing~\ref{lst:mediaButton}, and the physical system implementation was complete. 
+			
+			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 67, firstnumber = 67, lastline = 69, label = lst:mediaButton]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+									
 		\subsection{Mobile Application Implementation}
-			\lipsum[1]
+			As previously stated and can be seen from figures, the goal of the applications design was to be a simple as possible. For this reason implementation of the user interface took very little time. The majority of the effort was spent on configuring the Bluetooth communication, ensuring the application still functioned in the event of an unexpected disruption to the media-controller connection.\\
+			
+			\noindent
+			//screen-shots from application go here
+			
+			\paragraph{User Interface}
+			As can be seen, (reference), when the application is not connected to the media-controller the option available to the user is the connection button. This is done to prevent a user from attempting to use a function when the media-controller is inaccessible and causing confusion.\\
+					
+			Once the user is connected to the physical system they will be able to access several buttons, each corresponding to a button on the physical media-controller. A user will also be able to disconnect from the bonded device, returning them to the starting stage of the application.
+			
+			\paragraph{Bluetooth}
+			As previously mentioned, the majority of the applications development time was spent on implementing the Bluetooth connection process. Sample code from Google \cite{GoogleBluetooth:online} was used to produce a basic Bluetooth connection class, with further error checking and handling added as the application was tested. The implemented Bluetooth tests can be seen in the included activity diagram [Appendix~\ref{AppBtActivity}].
+			
+			\paragraph{Signal Transmission}
+			Having the application communicate a requested media function to the micro-controller was a simple affair. When a button on the applications user interface was click, a unique character was transmitted over the Bluetooth's output stream. Examples of the code used can be seen in Listings~\ref{lst:androidButton}~and~\ref{lst:bluetoothOut}
+			
+			\lstinputlisting[caption = A example of the Android's application button code., label = lst:androidButton, firstline = 31, firstnumber = 31, lastline = 37] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
+			
+			\lstinputlisting[caption = The method  called when transmitting a charcter to the media-controller., label = lst:bluetoothOut, firstline = 228, firstnumber = 228, lastline = 235] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
+			
+			\paragraph{Signal Reception}
+			On the device side of the spectrum, the code to receive a signal from the application was also simple to implement. The media-controller is constantly listening on it's serial input stream and, upon reading a character it calls the relevant function. It should be noted that pressing one of the physical buttons on the controller has a higher precedence than the application and will be executed before the application's requested command. The code required for this functionality is seen in Listing~\ref{lst:leonardoBt}.
+			
+			\lstinputlisting[caption = The code utilized by the microcontroller to recive input from the Application., label = lst:leonardoBt, firstline = 85, firstnumber = 85, lastline = 109] {../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			
 			
 	\section{Results}
 		\subsection{Achievements}
@@ -242,22 +273,22 @@
 		\centering
 		\label{fullSystem}
 		{\includegraphics[scale = 0.5]{fullSystem}}
-		\caption{The completed media-controller consisting of; micro-controller, Bluetooth module and push-button panel.}
+		\caption{The final media-controller complete with; micro-controller, Bluetooth module and push-buttons.}
 	\end{figure}
 	
-	\begin{figure}[]
-		\centering
-		\label{leonardo}
-		{\includegraphics[scale = 0.15]{leonardo}}
-		\caption{//ToDo - Write a caption}
-	\end{figure}
+%	\begin{figure}[]
+%		\centering
+%		\label{leonardo}
+%		{\includegraphics[scale = 0.15]{leonardo}}
+%		\caption{//ToDo - Write a caption}
+%	\end{figure}
 	
-	\begin{figure}[]
-		\centering
-		\label{breadboard}
-		{\includegraphics[scale = 0.15]{breadboard}}
-		\caption{//ToDo - Write a caption}
-	\end{figure}
+%	\begin{figure}[]
+%		\centering
+%		\label{breadboard}
+%		{\includegraphics[scale = 0.15]{breadboard}}
+%		\caption{//ToDo - Write a caption}
+%	\end{figure}
 			
 	\newpage	
 		
@@ -272,17 +303,20 @@
 	\begin{appendices}
 
 		\section{Arduino Media-Controller Source Code}
-			\lstinputlisting[caption = mediaController\_debounce.ino, nolol]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\lstinputlisting[title = mediaController\_debounce.ino, nolol]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			
 			\newpage
 			
-		\section{Arduino Media Key Library Source Code}
+		\section{Arduino Media Key Library Source Code} \label{mediacpp}
 			\lstinputlisting[title = Media.h, nolol]{../../ARDUINO/Media/Media.h}
 			\newpage
 			\lstinputlisting[title = Media.cpp, nolol]{../../ARDUINO/Media/Media.cpp}
+			
 			\newpage
 			
 		\section{Android Application Source code}
 			\lstinputlisting[title = MainActivity.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
+			
 			\newpage
 			
 			\lstinputlisting[title = BluetoothHandler.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
@@ -293,7 +327,6 @@
 				\centering
 				\label{AppBtActivity}
 				\includegraphics*[scale = 0.75]{applicationConnectionActivity}
-				\title{\\An activity diagram depicting the mobile application Bluetooth connection process.}
 			\end{figure}
 			
 		\section{Arduino Leonardo Data Sheet}
@@ -301,7 +334,6 @@
 			\centering
 			\label{LeoDatasheet}
 			\includegraphics*[scale = 0.75,angle=90]{ArduinoLeonardoDataSheet}
-			\title{\\The Data sheet of the Arduino Leonardo Micro-controller.}
 		\end{figure}
 					
 		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Initial Project Proposal}\label{IPP}]{../IPP/SET09118_IPP.pdf}
@@ -311,7 +343,6 @@
 		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Interim Report}\label{Interim}]{../INTERIM/SET09118_INTERIM.pdf}
 		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../INTERIM/SET09118_INTERIM.pdf}
 		\newpage	
-
 		 		
 	\end{appendices}
 
