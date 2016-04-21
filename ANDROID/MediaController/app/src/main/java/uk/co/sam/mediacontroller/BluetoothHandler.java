@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ public class BluetoothHandler {
     private static final UUID MY_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805f9b34fb");
     private static final int REQUEST_ENABLE_BT = 1;
+    private static final String DEVICE = "MEDIA_CONTROLLER";
     private BluetoothAdapter mBluetoothAdapter;
     private View mView;
     private Activity mActivity;
@@ -77,72 +77,35 @@ public class BluetoothHandler {
                 Snackbar.make(mView, "Could not enable Bluetooth", Snackbar.LENGTH_LONG).show();
             } else {
                 //show previously paired devices to user
-                showPairedDevicesDialog();
+//                showPairedDevicesDialog();
+                findDevice();
             }
         }
     }
 
-    //shows a dialog of paired bluetooth devices
-    public void showPairedDevicesDialog() {
-        //define various dialog attributes
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(mActivity);
-        final LayoutInflater inflater = mActivity.getLayoutInflater();
-        final View dialogLayout =
-                inflater.inflate(R.layout.paired_dialog,
-                        (ViewGroup) mActivity.findViewById(R.id.paired_dialog_list));
-        final ListView pairedListView = (ListView) dialogLayout
-                .findViewById(R.id.paired_dialog_list);
+    public void findDevice() {
+        //get all paired devices
         final Set<BluetoothDevice> pairedDevices = mBluetoothAdapter
                 .getBondedDevices();
-        final ArrayAdapter<String> btArrayAdapter =
-                new ArrayAdapter<>(mActivity, android.R.layout.simple_list_item_1);
-
-        //construct the dialog
-        dialogBuilder.setTitle("Paired Devices");
-        dialogBuilder.setView(dialogLayout);
-        pairedListView.setAdapter(btArrayAdapter);
-        //fill dialog with every paired device
-        for (BluetoothDevice device : pairedDevices) {
-            btArrayAdapter.add(device.getName());
-        }
-
-        //add cancel button to dialog
-        dialogBuilder.setNegativeButton(R.string.bluetooth_handler_paired_dialog,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        //close the dialog
-                        dialog.dismiss();
-                    }
-                });
-
-        //create  dialog
-        final AlertDialog ad = dialogBuilder.create();
-
-        //set clickListener for every item on the list
-        pairedListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String pairedName = ((TextView) view).getText().toString();
-                for (BluetoothDevice device : pairedDevices) {
-                    if (pairedName.equals(device.getName())) {
-                        //set selected device
-                        mDevice = device;
-                        //dismiss dialog
-                        ad.dismiss();
-                        try {
-                            //connect to selected device
-                            connectDevice();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
+        //so long as there is one paired devices
+        if (pairedDevices != null) {
+            //loop through all paired devices
+            for (BluetoothDevice device : pairedDevices) {
+                //if current device matches micro-controller
+                if (DEVICE.equals(device.getName())) {
+                    //set current device as main device
+                    mDevice = device;
                 }
             }
-        });
-        //display dialog
-        ad.show();
+            try {
+                //connect to selected device
+                connectDevice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            //do nothing
+        }
     }
 
     //connect to a selected device

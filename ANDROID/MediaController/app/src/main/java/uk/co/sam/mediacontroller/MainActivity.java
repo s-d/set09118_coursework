@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //set up function buttons
         final Button button0 = (Button) findViewById(R.id.main_button_0);
         assert button0 != null;
         button0.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             };
         });
 
+        //put all buttons in an array for easy access
         mFunctionButtons = new ArrayList<>();
         mOtherButtons = new ArrayList<>();
         ViewGroup layout = (ViewGroup) findViewById(R.id.main_button_layout);
@@ -115,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         RelativeLayout mainLayout = (RelativeLayout) findViewById(R.id.main_layout);
+
+        //device connection buttons
         final Button buttonConnect = new Button(this);
         buttonConnect.setText(R.string.main_activity_connect_button);
         assert mainLayout != null;
@@ -126,18 +130,20 @@ public class MainActivity extends AppCompatActivity {
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if (mBluetoothHandler.isEnabled()) {
-                    mBluetoothHandler.showPairedDevicesDialog();
+                    mBluetoothHandler.findDevice();
                 } else {
                     mBluetoothHandler.enableBluetooth();
                 }
             }
         });
+
         mOtherButtons.add(buttonConnect);
         hideButtons();
 
         mBluetoothHandler = new BluetoothHandler(this, toolbar);
     }
 
+    //method to hide all buttons
     public static void hideButtons() {
         for (Button button : mFunctionButtons) {
             button.setVisibility(View.GONE);
@@ -148,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //method to show all butoons
     public static void showButtons() {
         for (Button button : mFunctionButtons) {
             button.setVisibility(View.VISIBLE);
@@ -164,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    //bluetooth activation result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
@@ -172,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //menu handler
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -182,12 +191,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //pause handler
     @Override
     public void onPause() {
         super.onPause();  // Always call the superclass method first
         mBluetoothHandler.disconnectDevice();
     }
 
+    //resume handler
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first

@@ -224,7 +224,7 @@
 			
 			Once the buttons had been made foolproof, it was a simple matter of having each button call a command from the media library, see Listing~\ref{lst:mediaButton}, and the physical system implementation was complete. 
 			
-			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 67, firstnumber = 67, lastline = 69, label = lst:mediaButton]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 68, firstnumber = 68, lastline = 70, label = lst:mediaButton]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
 									
 		\subsection{Mobile Application Implementation}
 			As previously stated and can be seen from figures, the goal of the applications design was to be a simple as possible. For this reason implementation of the user interface took very little time. The majority of the effort was spent on configuring the Bluetooth communication, ensuring the application still functioned in the event of an unexpected disruption to the media-controller connection.\\
@@ -243,14 +243,14 @@
 			\paragraph{Signal Transmission}
 			Having the application communicate a requested media function to the micro-controller was a simple affair. When a button on the applications user interface was click, a unique character was transmitted over the Bluetooth's output stream. Examples of the code used can be seen in Listings~\ref{lst:androidButton}~and~\ref{lst:bluetoothOut}
 			
-			\lstinputlisting[caption = A example of the Android's application button code., label = lst:androidButton, firstline = 31, firstnumber = 31, lastline = 37] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
+			\lstinputlisting[caption = A example of the Android's application button code., label = lst:androidButton, firstline = 31, firstnumber = 31, lastline = 38] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
 			
-			\lstinputlisting[caption = The method  called when transmitting a charcter to the media-controller., label = lst:bluetoothOut, firstline = 228, firstnumber = 228, lastline = 235] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
+			\lstinputlisting[caption = The method  called when transmitting a charcter to the media-controller., label = lst:bluetoothOut, firstline = 191, firstnumber = 191, lastline = 198] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
 			
 			\paragraph{Signal Reception}
 			On the device side of the spectrum, the code to receive a signal from the application was also simple to implement. The media-controller is constantly listening on it's serial input stream and, upon reading a character it calls the relevant function. It should be noted that pressing one of the physical buttons on the controller has a higher precedence than the application and will be executed before the application's requested command. The code required for this functionality is seen in Listing~\ref{lst:leonardoBt}.
 			
-			\lstinputlisting[caption = The code utilized by the microcontroller to recive input from the Application., label = lst:leonardoBt, firstline = 85, firstnumber = 85, lastline = 109] {../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\lstinputlisting[caption = The code utilized by the microcontroller to recive input from the Application., label = lst:leonardoBt, firstline = 86, firstnumber = 86, lastline = 114] {../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
 			
 	\newpage
 			

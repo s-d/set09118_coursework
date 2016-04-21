@@ -58,34 +58,38 @@ void down() {
 
 void loop() {
 
-//  checkDebounce();
-//
-//  if (debounce[0].fell() == HIGH) {
-//    prev();
-//  }
-//
-//  if (debounce[1].fell() == HIGH) {
-//    play();
-//  }
-//
-//  if (debounce[2].fell() == HIGH) {
-//    next();
-//  }
-//
-//  if (debounce[3].read() == HIGH) {
-//    up();
-//    delay(volumeDelay);
-//  }
-//
-//  if (debounce[4].read() == HIGH) {
-//    down();
-//    delay(volumeDelay);
-//  }
+  //check all buttons
+  checkDebounce();
 
+  if (debounce[0].fell() == HIGH) {
+    prev();
+  }
+
+  if (debounce[1].fell() == HIGH) {
+    play();
+  }
+
+  if (debounce[2].fell() == HIGH) {
+    next();
+  }
+
+  if (debounce[3].read() == HIGH) {
+    up();
+    delay(volumeDelay);
+  }
+
+  if (debounce[4].read() == HIGH) {
+    down();
+    delay(volumeDelay);
+  }
+
+  //check Bluetooth
   while (mySerial.available()) {
+    //read char
     myChar = mySerial.read();
     Serial.print(myChar);
 
+    //execute command
     switch (myChar) {
       case't':
         play();
@@ -105,6 +109,7 @@ void loop() {
       default:
         break;
     }
+    //reset char
     myChar = ' ';
   }
 
