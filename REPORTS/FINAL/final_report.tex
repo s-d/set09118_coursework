@@ -135,7 +135,7 @@
 				
 	\section{Design}
 		\subsection{Media-controller Design}
-			While it was a simple task to specify what functionality the media-controller would have, it proved much harder to determine the way in which it would be delivered. 
+			While it was a simple task to specify what functionality the media-controller would have, it proved much harder to determine the way in which it would be delivered. A circuit digram (Figure~\ref{circ}) was produced to plan the layout of the system's  physical components, after which research of potential software implementation begun.
 			
 			\paragraph{Key press scripts}
 			Preliminary research indicated that a common method of allowing a micro-controller to execute commands on a PC was through "man-in-the-middle" scripts, such AutoHotkey \cite{AutoHotkey:online} or AutoIt \cite{AutoIt:online}. These programs would be run on a computer, intercept signals from a connected micro-controller and execute the requested command as a simulated keystroke.
@@ -153,6 +153,7 @@
 				\label{mediaController_schem}
 				{\includegraphics{mediaController_schem}}
 				\caption{A circuit diagram of the proposed media-controller}
+				\label{circ}
 			\end{figure}
 		
 		\subsection{Mobile Application Design}
@@ -224,18 +225,39 @@
 			
 			Once the buttons had been made foolproof, it was a simple matter of having each button call a command from the media library, see Listing~\ref{lst:mediaButton}, and the physical system implementation was complete. 
 			
-			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 68, firstnumber = 68, lastline = 70, label = lst:mediaButton]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 67, firstnumber = 68, lastline = 69, label = lst:mediaButton]{../../ARDUINO/mediaController/mediaController.ino}
 									
 		\subsection{Mobile Application Implementation}
-			As previously stated and can be seen from figures, the goal of the applications design was to be a simple as possible. For this reason implementation of the user interface took very little time. The majority of the effort was spent on configuring the Bluetooth communication, ensuring the application still functioned in the event of an unexpected disruption to the media-controller connection.\\
+			As previously stated and can be seen from figures, the goal of the applications design was to be a simple as possible. For this reason implementation of the user interface took very little time. The majority of the effort was spent on configuring the Bluetooth communication, ensuring the application still functioned in the event of an unexpected disruption to the media-controller connection.
 			
-			\noindent
-			//screen-shots from application go here
+			\begin{figure}[]
+				\centering
+				\begin{minipage}[h]{0.29\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{app01}
+					\caption{The mobile application interface before a connection has been established.}
+					\label{fig:app01}
+				\end{minipage}
+				\hfill
+				\begin{minipage}[h]{0.29\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{app}
+					\caption{The mobile application interface after connecting to the media-controller.}
+					\label{fig:app}
+				\end{minipage}
+				\hfill
+				\begin{minipage}[h]{0.29\textwidth}
+					\centering
+					\includegraphics[width=\textwidth]{app06}
+					\caption{The disconnect button, accessible from the pop-up menu.}
+					\label{fig:app06}
+				\end{minipage}				
+			\end{figure}
 			
 			\paragraph{User Interface}
-			As can be seen, (reference), when the application is not connected to the media-controller the option available to the user is the connection button. This is done to prevent a user from attempting to use a function when the media-controller is inaccessible and causing confusion.\\
+			As can be seen in Figure~\ref{fig:app01}, when the application is not connected to the media-controller the option available to the user is the connection button. This is done to prevent a user from attempting to use a function when the media-controller is inaccessible and causing confusion.\\
 					
-			Once the user is connected to the physical system they will be able to access several buttons, each corresponding to a button on the physical media-controller. A user will also be able to disconnect from the bonded device, returning them to the starting stage of the application.
+			Once the user is connected to the physical system they will be able to access several buttons, each corresponding to a button on the physical media-controller 	(Figure~\ref{fig:app}). A user will also be able to disconnect from the bonded device (Figure~\ref{fig:app06}), returning them to the starting stage of the application.
 			
 			\paragraph{Bluetooth}
 			As previously mentioned, the majority of the applications development time was spent on implementing the Bluetooth connection process. Sample code from Google \cite{GoogleBluetooth:online} was used to produce a basic Bluetooth connection class, with further error checking and handling added as the application was tested. The implemented Bluetooth tests can be seen in the included activity diagram [Appendix~\ref{AppBtActivity}].
@@ -250,9 +272,43 @@
 			\paragraph{Signal Reception}
 			On the device side of the spectrum, the code to receive a signal from the application was also simple to implement. The media-controller is constantly listening on it's serial input stream and, upon reading a character it calls the relevant function. It should be noted that pressing one of the physical buttons on the controller has a higher precedence than the application and will be executed before the application's requested command. The code required for this functionality is seen in Listing~\ref{lst:leonardoBt}.
 			
-			\lstinputlisting[caption = The code utilized by the microcontroller to recive input from the Application., label = lst:leonardoBt, firstline = 86, firstnumber = 86, lastline = 114] {../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\lstinputlisting[caption = The code utilized by the microcontroller to recive input from the Application., label = lst:leonardoBt, firstline = 86, firstnumber = 86, lastline = 114] {../../ARDUINO/mediaController/mediaController.ino}
 			
-	\newpage
+	\section{Testing}
+		
+		Testing was of high importance in this project. Due to the nature of the two systems communicating between each other it had to be verified that the correct data was being transferred and any communication disconnections did not cause any unexpected results.\\
+		
+		\noindent
+		To ensure all possible tests were conducted a test case table (Table~\ref{testCase}) was constructed with the expected outcomes for each event. This allowed the systems to be systematic checked for any and allow potential bugs
+	
+		\begin{table}[h]
+			\centering
+			\caption{Test cases used to validate the systems}
+			\label{testCase}
+			\begin{tabular}{|r|r|r|}
+				\hline
+				\multicolumn{1}{|l|}{Case} & \multicolumn{1}{l|}{Expected Outcome} & \multicolumn{1}{l|}{Outcome} \\ \hline
+				No Bluetooth adapter      & Tell user application cannot operate          & TRUE                         \\
+				Bluetooth not enabled     & Ask user to enable Bluetooth          & TRUE                         \\
+				Device not powered         & Tell user could not connect           & TRUE                         \\
+				Connected to device        & Inform user of connection             & TRUE                         \\
+				Disconnect from device    & Inform user of disconnection          & TRUE                         \\
+				Function button pressed    & Host device calls function            & TRUE                         \\ \hline
+			\end{tabular}
+		\end{table}
+			
+		\noindent
+		During the testing stage of the project the media-controller was tried on various host devices to check if the HID functionality was windows specific. It was found that the media-controller was at least partially operational on the following devices:
+		
+		\begin{itemize}
+			\item Mac OS laptop
+			\item Debian Linux desktop
+			\item Android tablet
+			\item Samsung TV
+		\end{itemize}
+		
+		\noindent
+		Even though the MosCoW method only specified that the system should function on a Windows operating system, the device functions on a multitude of devices, an unforeseen feature of utilizing HID usage codes.
 			
 	\section{Results}
 		The specification for the project presented in this report was to construct a micro-controller based system and companion application, with some form of communication between each of the systems. The media-controller and remote controller application meet the requirements outlined in the specification as well as making use of technologies and methodologies not requested in the specification.
@@ -303,7 +359,9 @@
 		were achieved. Though the development of the system was challenging at times, this kept the project engaging and entertaining. 
 		
 	\section{Evaluation of Achievement}
-		\lipsum[6]
+		Having never worked with micro-controllers previously, the open ended specification of this project was extremely daunting. This partially why I opted to construct a media-controller, I felt that building a device that I would use everyday would motivate me to research the best methods to use in the project. 
+		
+		While the specification for this project focused mainly communication methods, I got highly engrossed in learning about USB devices, their configuration and specifications. I found researching HIDs especially interesting, as they are devices that get used 
 				
 	
 	
@@ -334,16 +392,18 @@
 	\begin{appendices}
 
 		\section{Arduino Media-Controller Source Code}
-			\lstinputlisting[title = mediaController\_debounce.ino, nolol]{../../ARDUINO/mediaController_debounce/mediaController_debounce.ino}
+			\lstinputlisting[title = mediaController\_debounce.ino, nolol]{../../ARDUINO/mediaController/mediaController.ino}
 			
-			\newpage
+		\newpage
 			
 		\section{Arduino Media Key Library Source Code} \label{mediacpp}
 			\lstinputlisting[title = Media.h, nolol]{../../ARDUINO/Media/Media.h}
+		
 			\newpage
+			
 			\lstinputlisting[title = Media.cpp, nolol]{../../ARDUINO/Media/Media.cpp}
 			
-			\newpage
+		\newpage
 			
 		\section{Android Application Source code}
 			\lstinputlisting[title = MainActivity.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
@@ -361,18 +421,20 @@
 			\end{figure}
 			
 		\section{Arduino Leonardo Data Sheet}
-		\begin{figure}[H]
-			\centering
-			\label{LeoDatasheet}
-			\includegraphics*[scale = 0.75,angle=90]{ArduinoLeonardoDataSheet}
-		\end{figure}
-					
+			\begin{figure}[H]
+				\centering
+				\label{LeoDatasheet}
+				\includegraphics*[scale = 0.75,angle=90]{ArduinoLeonardoDataSheet}
+			\end{figure}
+				
 		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Initial Project Proposal}\label{IPP}]{../IPP/SET09118_IPP.pdf}
 		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../IPP/SET09118_IPP.pdf}
+		
 		\newpage
 	
 		\includepdf[scale = 0.8, pages=1,pagecommand=\section{Interim Report}\label{Interim}]{../INTERIM/SET09118_INTERIM.pdf}
 		\includepdf[scale = 0.8, pages=2-,pagecommand={}]{../INTERIM/SET09118_INTERIM.pdf}
+	
 		\newpage	
 		 		
 	\end{appendices}

@@ -1,0 +1,6 @@
+Case,Expected Outcome,Outcome
+No Bluetooth adapater,Tell user app cannot operate,TRUE
+Bluetooth not eneabled,Ask user to enable Bluetooth,TRUE
+Device not powered,Tell user could not connect,TRUE
+Connected to device,Inform user of connection,TRUE
+Dissconnect from device,Inform user of disconnection,TRUE
