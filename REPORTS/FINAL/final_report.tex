@@ -271,25 +271,37 @@
 			\noindent
 			The open specification of the project allowed for investigation and implementation of specific areas of interest. 
 			
+				\begin{figure}[h]
+					\centering
+					\label{fullSystem}
+					{\includegraphics[scale = 0.5]{fullSystem}}
+					\caption{The final media-controller complete with; micro-controller, Bluetooth module and push-buttons.}
+				\end{figure}
 			
 		\subsection{Recommendations}
 			One of the key areas of consideration when undertaking a project similar to this is the  limitations and specifications of the hardware intended to be used. Almost all micro-controllers available for purchase will be able to interface with a PC via serial communication, however only a handful of the systems can function as a USB Human Interface Device.
 			
-			Another consideration for similar systems is the method of remote communication between the media-controller and the user. For the purposes of this project Bluetooth provided an adequate service for linking the application to the device. It may be worth considering technologies like Wi-Fi or Zigbee to allow the system to be accessed by multiple user at once or from over wireless local area network. 
+			Another consideration for similar systems is the method of remote communication between the media-controller and the user. For the purposes of this project Bluetooth provided an adequate service for linking the application to the device. It may be worth considering technologies like Wi-Fi or ZigBee to allow the system to be accessed by multiple user at once or over a wireless local area network. 
 			
 		\subsection{Future Work}
-			\lipsum[4] 
-	
-	\begin{figure}[]
-		\centering
-		\label{fullSystem}
-		{\includegraphics[scale = 0.5]{fullSystem}}
-		\caption{The final media-controller complete with; micro-controller, Bluetooth module and push-buttons.}
-	\end{figure}
-	
+			Though the project is complete and fulfilled all the aims and goals highlighted in the specification, their is still potential for additional functionality to be added to the deliverables.\\
+			
+			\noindent
+			One potential idea would be to incorporate different operation modes into the controller, allowing a user to change the functionality of the systems buttons depending on what task they were working on. Examples include a mode for text processing where the buttons will provide short-cuts for functions like cut, copy and paste, or a mode for photo editing software where the buttons will correspond to a editing tool.\\
+			
+			\noindent
+			There is also potential to add additional functionality to the mobile application. One thought was to include a PC security feature where the host PC would automatically lock if the physical system lost connection with the mobile device, i.e. if a user walked away from their computer with their phone in their pocket. This would allow a user simply walk away from their PC, without the need to lock their PC or worry about other accessing it while they are away from their desk.
+		
 	\section{Conclusion}
-		\lipsum[5]
-				
+		The aim of this project was to produce a media-controller and companion application and investigate communication between both systems. 
+		
+		Agile development methods like MoSCoW and Gantt charts were utilized to ensure the project stayed on scheduled and time wasted developing non-crucial features of the systems. 
+		
+		Even though it was never intended during the project's inception, a great deal of effort went into the research of how USB devices work and how they are developed. While the use of HID technology was not the only way to complete this project, it appeared to be the most fit for purpose.
+		
+		Overall, the project can be considered a success, all original goals that were set out
+		were achieved. Though the development of the system was challenging at times, this kept the project engaging and entertaining. 
+		
 	\section{Evaluation of Achievement}
 		\lipsum[6]
 				
