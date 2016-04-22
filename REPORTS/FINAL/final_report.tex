@@ -59,7 +59,7 @@
 	\maketitle
 	
 	\section*{Abstract}	
-		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix~\ref{IPP}] [Appendix~\ref{Interim}]. The goal of the project was to research, develop and evaluate a micro-controller based system and mobile application. The purpose of this report is to catalogue the project’s various stages, suggest future work and assert the overall success of the assignment.
+		This document is the final report and a summary to the "USB/Bluetooth Media Controller" project started in February [Appendix~\ref{IPP}] [Appendix~\ref{Interim}]. The goal of the project was to research, develop and evaluate a microcontroller based system and mobile application. The purpose of this report is to catalogue the project’s various stages, suggest future work and assert the overall success of the assignment.
 					
 	\pagenumbering{gobble}	
 	
@@ -80,41 +80,41 @@
 	\newpage
 		
 	\section{Introduction}
-		\subsection{Background and Rational}
-			The goal for this project was to produce a system that would allow users to interact with their PC media in a more intuitive manner. From tape cassettes to compact discs and finally to digital MP3 files, the way in which media is stored and experienced had changed dramatically over the last twenty years but the way that users interact with their media has remained stagnant.
+		\subsection{Background and Rationale}
+			The goal for this project was to produce a system that would allow users to interact with their PC media in a more intuitive manner. From tape cassettes to compact discs and finally to digital MP3 files, the way in which media is stored and experienced has changed dramatically over the last twenty years but the way that users interact with their media has remained stagnant.
 			
-			While playing or pausing media, changing track or altering volume are typically not difficult tasks for most users, it can often be complicated when the media is not in focus or other applications are in use. Many companies have attempted to solve this issue by incorporating media control keys into keyboards, however these buttons are often in hard to reach locations or only work with specific applications.
+			While playing or pausing media, changing track or altering volume are typically not difficult tasks for most users, however it can often get complicated when the media is not in focus or if other applications are in use. Many companies have attempted to solve this issue by incorporating media control keys into keyboards. However these buttons are often in hard to reach locations, or they only work with specific applications.
 			
-			For the reasons mentioned above, it is clear that a independent media-controller, that supports a multitude of media application would be a popular device for many users that utilize a PC as the main source of their media. One of the key deliverables of this project is the aforementioned media controller, the other is a companion mobile application that will allow users to access media functions while away from the PC or controller.
+			For the reasons mentioned above, it is clear that an independent Media Controller, that supports a multitude of media applications would be a popular device for many users that utilise a PC as the main source of their media. One of the key deliverables of this project is the aforementioned Media Controller, but the other is a companion mobile application that will allow users to access media functions while away from the PC or controller.
 					
 		\subsection{Aims and Deliverables}
-			As stated previously, the two major deliverables discussed in this report are; a micro-controller based media controller and an Android mobile application to control said device. The aim of both deliverables is to simplify the way a user interacts with media, and this was a major consideration for design and implementation of the systems.
+			As stated previously, the two major deliverables discussed in this report are a microcontroller based Media Controller and an Android mobile application to control said device. The aim of both deliverables is to simplify the way in which a user interacts with media. This was a major consideration for design and implementation of the systems.
 			
 			\paragraph{Media Controller}
-				The Media controller is a device that can be connected to a PC via USB, and provide users with a simple,  physical interface with which to interact with their media. 
+				The Media Controller is a device that can be connected to a PC via USB, and provide users with a simple,  physical interface with which to interact with their media. 
 				
 				In terms of functionality, the controller will provide users with the ability to play or pause their music, skip to the next or previous track and raise or lower the volume of the music. These functions are accessible through a set of push buttons, providing tactile feedback to the user.
 				
-				Basing the system around an Arduino micro-controller \cite{Arduino:online} allows for simple expansion of the project. For instance, additional buttons, switches or potentiometers can be easily added to the system and allow a user to customize the controller and augment its functions.
+				Basing the system around an Arduino microcontroller \cite{Arduino:online} allows for simple expansion of the project. For instance, additional buttons, switches or potentiometers can be easily added to the system and allow a user to customise the controller and augment its functions.
 			
 			\paragraph{Mobile Application}
-				The media controller was designed to abstract media functions into the simplest interface possible, the Android application attempts to do the same.
+				The Media Controller was designed to extrapolate any media functions into the simplest interface possible and the Android application attempts to do the same.
 				
 				The benefit of a mobile application is that it allows a user to interact with their media, even if they are not at their desk. 
 				
-				The goal of the application's appearance was to keep it as minimal as possible. The reason for this was to ensure the application's design was appealing and keep it as easy-to-use as possible.
+				The goal of the application's appearance was to keep it as minimal as possible. The reason for this was to ensure the application's design was appealing to the user and to keep it as seamlessly simple as possible to use.
 				
-				In terms of functionality, the Android application will offer a user the same PC media functions as the physical controller, but via a remote, digital interface.
+				In terms of functionality, the Android application will offer the user the same PC media functions as the physical controller, but via a remote, digital interface.
 							
 			\paragraph{Limitations}
-				In an ideal world, a media controller would be able interface with any device, and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionally on every combination of operating system, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW method was utilized to determine what was within scope of the project.
+				In an ideal world, a Media Controller would be able interact with any device and any media application, allowing for complete control without the need for installation and configuration. Unfortunately, it would be impossible to ensure total functionality on every combination of operating systems, hardware and media application, so limitations were imposed to keep the implementation reasonable. MoSCoW method was utilized to determine what was within scope of the project.
 
 			\begin{minipage}{\textwidth}\label{MoSCoW}
 				\paragraph{MoSCoW}
 					\noindent\\
 					\textbf{Must:}
 						\begin{itemize}
-							\item Media controller functionality on a PC running Windows operating system
+							\item Media Controller functionality on a PC running Windows operating system
 							\item Media key support for the Google Play Music application
 						\end{itemize}			
 					\textbf{Should:}
@@ -133,34 +133,47 @@
 						\end{itemize}
 				\end{minipage}
 				
+	\section{Project Management}
+		To be sure that the project reached fruition, project management techniques were utilized. The previously mentioned MoSCoW method was used to determine the features to be included in the project and their priority in terms of the finished product. To keep track of the projected time needed to implement each feature a Gantt chart (Figure~\ref{gantt}) was used.
+		
+		\begin{figure}[h]
+			\centering
+			{\includegraphics[scale = 0.7]{gantt}}
+			\caption{A Gantt chart of the project time line.}
+			\label{gantt}
+		\end{figure}
+				
+		By utilizing development sprints it was possible to implement the systems and document the process with very little overlap. The sprint cycles also had the added benefit of forcing speedy development, preventing feature creep and over engineering. 
+		
+		The version control software git was heavily utilized during the development process. Git allowed new and potentially volatile features to be tested, without any risk to the code base's integrity. Git also allows developers to view any previous changes they have made to their code, an indispensable feature when attempting to identify bugs or dysfunctional features.   
+		
 	\section{Design}
-		\subsection{Media-controller Design}
-			While it was a simple task to specify what functionality the media-controller would have, it proved much harder to determine the way in which it would be delivered. A circuit digram (Figure~\ref{circ}) was produced to plan the layout of the system's  physical components, after which research of potential software implementation begun.
+		\subsection{Media Controller Design}
+			While it was a simple task to specify what functionality the Media Controller would have, it proved much harder to determine the way in which it would be delivered. A circuit digram (Figure~\ref{circ}) was produced to plan the layout of the system's  physical components, after which research of potential software implementation begun.
 			
 			\paragraph{Key press scripts}
-			Preliminary research indicated that a common method of allowing a micro-controller to execute commands on a PC was through "man-in-the-middle" scripts, such AutoHotkey \cite{AutoHotkey:online} or AutoIt \cite{AutoIt:online}. These programs would be run on a computer, intercept signals from a connected micro-controller and execute the requested command as a simulated keystroke.
-			While key scripts would be usable, they did come with major flaws; Firstly, key scripts would only work with media applications that already support keyboard short-cuts and secondly, the MoSCoW method produced for this project (Section~\ref{MoSCoW}, Page~\pageref{MoSCoW}) stated that propriety programs should be avoided if possible.
-			When it was determined that Key press scripts would offer only a partial solution to the project, further research was taken to find a superior method.
+			Preliminary research indicated that a common method of allowing a microcontroller to execute commands on a PC was through "man-in-the-middle" scripts, such AutoHotkey \cite{AutoHotkey:online} or AutoIt \cite{AutoIt:online}. These programs would be run on a computer, intercept signals from a connected microcontroller and execute the requested command as a simulated keystroke.
+			While key scripts would be usable, they did come with major flaws. Firstly, key scripts would only work with media applications that already support keyboard short-cuts and secondly, the MoSCoW method produced for this project (Section~\ref{MoSCoW}, Page~\pageref{MoSCoW}) stated that propriety programs should be avoided if possible.
+			When it was determined that Key press scripts would only offer a partial solution to the project, further research was taken to find a superior method.
 			
 			\paragraph{Human Interface Devices}
-			Peripherals like USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC it transmits a list of hexadecimal values called a usage table to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everything from printing characters (keyboard) to moving a mouse cursor (track ball), in addition, a number of media controls are available through the use if a HID usage table. 
+			Peripherals such as USB keyboards, game pads and joysticks are all classified as USB Human Interface Devices or HID's \cite{HID:online} \cite{HIDSiliconLab:online}. When a HID is plugged into a PC, it transmits a list of hexadecimal values called a usage table to the host PC. Each number in the usage table corresponds to a specific command or function for the host device to carry out. The commands that can be included in the table consist of everything from printing characters (keyboard) to moving a mouse cursor (track ball). In addition, a number of media controls are available through the use of an HID usage table. 
 							
-			\paragraph{Micro-controller}
-			With the discovery of usage tables in mind, a suitable micro-controller had to be found to act as a HID. research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that the Arduino Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno, the Leonardo can interact with a PC as a HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
+			\paragraph{Microcontroller}
+			With the discovery of usage tables in mind, a suitable microcontroller had to be found to act as an HID. Research of various Arduino product specifications \cite{Uno:online} \cite{Leonardo:online} \cite{LeonardoGuide:online} and data sheets [Appendix~\ref{LeoDatasheet}] indicated that the Arduino Leonardo would be the most suited platform to prototype the system on. The reason for this was that unlike the Uno, the Leonardo can interact with a PC as an HID, this is because the Leonardo only has a single processor to both run Sketches and deal with USB communications.
 			
-			\begin{figure}[]
+			\begin{figure}[h]
 				\centering
-				\label{mediaController_schem}
 				{\includegraphics{mediaController_schem}}
-				\caption{A circuit diagram of the proposed media-controller}
+				\caption{A circuit diagram of the proposed Media Controller.}
 				\label{circ}
 			\end{figure}
-		
+				
 		\subsection{Mobile Application Design}
-			The premise for the mobile application was simple, to allow a user to access the functions of the media-controller remotely, and as such the overall ascetic of the application was designed to be simplistic as well. The most challenging portion of the application's design stage was determining how the application would communicate with the micro-controller.
+			The premise for the mobile application was simple - to allow a user to access the functions of the Media Controller remotely, and thus the overall aesthetic of the application was designed to be simplistic as well. The most challenging part of the application's design stage was determining how the application would communicate with the microcontroller.
 			
 			\paragraph{Remote Serial Communication}
-			Preliminary research indicated that two major technologies existed to communicate serial signals over-the-air namely; Bluetooth and Wi-Fi. A simplified breakdown of each standard is presented in Table~\ref{btWiFiComparison}.
+			Preliminary research indicated that two major technologies existed to communicate serial signals over-the-air, namely Bluetooth and Wi-Fi. A simplified breakdown of each standard is presented in Table~\ref{btWiFiComparison}.
 			
 			\begin{table}[h]
 				\centering
@@ -175,33 +188,30 @@
 			\end{table}
 			
 			\noindent
-			As can be seen from the table, both technologies offer similar benefits and either could be used in the final system. In the end it was decided tat Bluetooth would be they most suitable medium, due to its lower cost and previous/personal experience using the technology. To finalise this decision, a HC-06 Bluetooth module \cite{HC06DataSheet:online} was purchased to allow the media controller to transmit a Bluetooth signal.
+			As one can see from the table, both technologies offer similar benefits and either one could have been used in the final system. In the end it was decided that Bluetooth would be the most suitable medium, due to its lower cost and previous personal experience using this technology. To finalise this decision, a HC-06 Bluetooth module \cite{HC06DataSheet:online} was purchased to allow the Media Controller to transmit a Bluetooth signal.
 			
 			\paragraph{Bluetooth Communication}
-			While Bluetooth is a relatively simple technology in terms of use, it still must be correctly configured to ensure expected functionality. A activity diagram of the Bluetooth connection process [Appendix~\ref{AppBtActivity}] was created to ensure that the application's communication procedure was well documented and implemented correctly.
+			While Bluetooth is a relatively simple technology in terms of use, it still must be correctly configured to ensure expected functionality. An activity diagram of the Bluetooth connection process [Appendix~\ref{AppBtActivity}] was created to ensure that the application's communication procedure was well documented and implemented correctly.
 			
 			\paragraph{User Interface}
-			As previously stated, the goal of the applications interface was to keep as simple as possible. Wire frames were produced to prototype potential layouts. In the end a simple panel of vertical buttons was chosen for its ease of use and minimalistic style.\\
+			As previously stated, the goal of the application's interface was to keep it as simple as possible. Wire frames were produced to prototype potential layouts. In the end, a simple panel of vertical buttons was chosen for its ease of use and minimalistic style.
 			
-			\noindent
-			//put in some figures of wire frames
-
 	\section{Implementation}
-		\subsection{Media-controller Implementation}
-			With the knowledge that HID usage commands would be the most feasible way to complete the project the creation of a bespoke, media usage table was begun. However, to complete the implementation further examples of usage tables were required.
+		\subsection{Media Controller Implementation}
+			With the knowledge that HID usage commands would be the most feasible way to complete the project, the creation of a bespoke media usage table commenced. However, to complete the implementation further, examples of usage tables were required.
 			
-			By examining Arduino's default mouse and keyboard HID library's \cite{ArduinoGit:online} and utilizing information from the USB Implementers Forum \cite{USBHID:online} it became clear how to implement a usage table as an Arduino library. With the usage table implemented, it still had to be filled with the relevant hexadecimal codes.
+			By examining Arduino's default mouse and keyboard HID library's \cite{ArduinoGit:online} and utilizing information from the USB Implementers Forum \cite{USBHID:online}, it became clear how to implement a usage table as an Arduino library. With the usage table implemented, it still had to be filled with the relevant hexadecimal codes.
 				
 			\paragraph{Usage Codes}
 			A three year-old personal blog post that had previously been dismissed for being too outdated was able to provided a sample Usage Table with a host of different media commands \cite{MediaBlog:online}. The post in question had been analysed as potential solution to the project during the initial research phase. However, due to the age of the post and the fact the code was designed to interact with an IDE fourteen iterations out of date (at time of writing), it was deemed unusable. Even a brief conversation on the official Arduino IRC channel with a lead developer determined that the libraries needed to get the blog code running again were no longer available in the Arduino IDE.
 					
-			While the majority of the hex codes presented in the blog's table were usable, a few were depreciated and no longer worked. The USB Implementers Forum once again provided the answer in the form of a PDF with all the current in use hex codes \cite{HIDUsagePage:online}.
+			While the majority of the hex codes presented in the blog's table were usable, a few had depreciated and no longer worked. The USB Implementers Forum once again provided the answer in the form of a PDF with all the current in use hex codes \cite{HIDUsagePage:online}.
 			
 			The usage codes used in the finished device are visible in Table~\ref{usageTable}, an example of how they appear in the source code is seen in [Appendix~\ref{mediacpp}]. 
 			
-			\begin{table}[]
+			\begin{table}[h]
 				\centering
-				\caption{A usage table of the HID commands utilized by the media-controller}
+				\caption{A usage table of the HID commands utilized by the Media Controller}
 				\label{usageTable}
 				\begin{tabular}{|r|r|r|}
 					\hline
@@ -221,16 +231,21 @@
 			\end{table}
 			
 			\paragraph{Push Buttons}
-			Once the media library was implemented they had to be made accessible to the user. This was done through the use of an open source Arduino button library called Bounce2 \cite{Bounce2Git:online}. The reason for using a external library was to ensure that any electrical "noise" or interference would not cause the micro-controller to register a single button press as multiple, calling a media function several times when a user only wanted to use it once.
+			Once the media library was implemented they had to be made accessible to the user. This was done through the use of an open source Arduino button library called Bounce2 \cite{Bounce2Git:online}. The reason for using a external library was to ensure that any electrical or interference would not cause the microcontroller to register a single button-press as multiple, calling a media function several times when a user only wanted to use it once.
 			
 			Once the buttons had been made foolproof, it was a simple matter of having each button call a command from the media library, see Listing~\ref{lst:mediaButton}, and the physical system implementation was complete. 
 			
-			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 67, firstnumber = 68, lastline = 69, label = lst:mediaButton]{../../ARDUINO/mediaController/mediaController.ino}
+			\lstinputlisting[caption = An example of how the media-controler executes a media command., firstline = 68, firstnumber = 68, lastline = 70, label = lst:mediaButton]{../../ARDUINO/mediaController/mediaController.ino}
+			
 									
 		\subsection{Mobile Application Implementation}
-			As previously stated and can be seen from figures, the goal of the applications design was to be a simple as possible. For this reason implementation of the user interface took very little time. The majority of the effort was spent on configuring the Bluetooth communication, ensuring the application still functioned in the event of an unexpected disruption to the media-controller connection.
+			The goal of the applications design was to be as simple as possible. For this reason, implementation of the user interface took very little time. The majority of the effort was spent on configuring the Bluetooth communication, ensuring the application still functioned in the event of an unexpected disruption to the Media Controller connection.
 			
-			\begin{figure}[]
+			
+			\paragraph{User Interface}
+			As can be seen in Figure~\ref{fig:app01}, when the application is not connected to the Media Controller, the option available to the user is the connection button. This is done to prevent a user from attempting to use a function when the Media Controller is inaccessible and causing confusion.
+			
+			\begin{figure}[h]
 				\centering
 				\begin{minipage}[h]{0.29\textwidth}
 					\centering
@@ -242,7 +257,7 @@
 				\begin{minipage}[h]{0.29\textwidth}
 					\centering
 					\includegraphics[width=\textwidth]{app}
-					\caption{The mobile application interface after connecting to the media-controller.}
+					\caption{The mobile application interface after connecting to the Media Controller.}
 					\label{fig:app}
 				\end{minipage}
 				\hfill
@@ -254,32 +269,29 @@
 				\end{minipage}				
 			\end{figure}
 			
-			\paragraph{User Interface}
-			As can be seen in Figure~\ref{fig:app01}, when the application is not connected to the media-controller the option available to the user is the connection button. This is done to prevent a user from attempting to use a function when the media-controller is inaccessible and causing confusion.\\
 					
-			Once the user is connected to the physical system they will be able to access several buttons, each corresponding to a button on the physical media-controller 	(Figure~\ref{fig:app}). A user will also be able to disconnect from the bonded device (Figure~\ref{fig:app06}), returning them to the starting stage of the application.
+			Once the user is connected to the physical system, they will be able to access several buttons - each corresponding to a button on the physical Media Controller 	(Figure~\ref{fig:app}). A user will also be able to disconnect from the bonded device (Figure~\ref{fig:app06}), returning them to the starting stage of the application.
 			
 			\paragraph{Bluetooth}
 			As previously mentioned, the majority of the applications development time was spent on implementing the Bluetooth connection process. Sample code from Google \cite{GoogleBluetooth:online} was used to produce a basic Bluetooth connection class, with further error checking and handling added as the application was tested. The implemented Bluetooth tests can be seen in the included activity diagram [Appendix~\ref{AppBtActivity}].
 			
 			\paragraph{Signal Transmission}
-			Having the application communicate a requested media function to the micro-controller was a simple affair. When a button on the applications user interface was click, a unique character was transmitted over the Bluetooth's output stream. Examples of the code used can be seen in Listings~\ref{lst:androidButton}~and~\ref{lst:bluetoothOut}
+			Having the application communicate a requested media function to the microcontroller was a simple affair. When a button on the applications user interface was click, a unique character was transmitted over the Bluetooth's output stream. Examples of the code used can be seen in Listings~\ref{lst:androidButton}~and~\ref{lst:bluetoothOut}
 			
 			\lstinputlisting[caption = A example of the Android's application button code., label = lst:androidButton, firstline = 31, firstnumber = 31, lastline = 38] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/MainActivity.java}
 			
-			\lstinputlisting[caption = The method  called when transmitting a charcter to the media-controller., label = lst:bluetoothOut, firstline = 191, firstnumber = 191, lastline = 198] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
+			\lstinputlisting[caption = The method  called when transmitting a charcter to the Media Controller., label = lst:bluetoothOut, firstline = 191, firstnumber = 191, lastline = 198] {../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
 			
 			\paragraph{Signal Reception}
-			On the device side of the spectrum, the code to receive a signal from the application was also simple to implement. The media-controller is constantly listening on it's serial input stream and, upon reading a character it calls the relevant function. It should be noted that pressing one of the physical buttons on the controller has a higher precedence than the application and will be executed before the application's requested command. The code required for this functionality is seen in Listing~\ref{lst:leonardoBt}.
+			On the device side of the spectrum, the code to receive a signal from the application was also simple to implement. The Media Controller is constantly listening on its serial input stream and upon reading a character it calls the relevant function. It should be noted that pressing one of the physical buttons on the controller has a higher precedence than the application and will be executed before the application's requested command. The code required for this functionality is seen in Listing~\ref{lst:leonardoBt}.
 			
-			\lstinputlisting[caption = The code utilized by the microcontroller to recive input from the Application., label = lst:leonardoBt, firstline = 86, firstnumber = 86, lastline = 114] {../../ARDUINO/mediaController/mediaController.ino}
+			\lstinputlisting[caption = The code utilized by the microcontroller to receive input from the Application., label = lst:leonardoBt, firstline = 86, firstnumber = 86, lastline = 111] {../../ARDUINO/mediaController/mediaController.ino}
 			
 	\section{Testing}
-		
-		Testing was of high importance in this project. Due to the nature of the two systems communicating between each other it had to be verified that the correct data was being transferred and any communication disconnections did not cause any unexpected results.\\
+		Testing was of high importance in this project. Due to the nature of the two systems communicating between each other, it had to be verified that the correct data was being transferred and any communication disconnections did not cause any unexpected results.\\
 		
 		\noindent
-		To ensure all possible tests were conducted a test case table (Table~\ref{testCase}) was constructed with the expected outcomes for each event. This allowed the systems to be systematic checked for any and allow potential bugs
+		To ensure all possible tests were conducted a test case table (Table~\ref{testCase}) was constructed with the expected outcomes for each event. This allowed the systems to be systematic checked for any and allow potential bugs.
 	
 		\begin{table}[h]
 			\centering
@@ -296,9 +308,16 @@
 				Function button pressed    & Host device calls function            & TRUE                         \\ \hline
 			\end{tabular}
 		\end{table}
+		
+		\begin{figure}[h]
+			\centering
+			{\includegraphics[scale = 0.1]{app02}}
+			\caption{The message displayed to users when Bluetooth is not enabled.}
+			\label{app02}
+		\end{figure}
 			
 		\noindent
-		During the testing stage of the project the media-controller was tried on various host devices to check if the HID functionality was windows specific. It was found that the media-controller was at least partially operational on the following devices:
+		During the testing stage of the project the Media Controller was tried on various host devices to check if the HID functionality was windows specific. It was found that the Media Controller was at least partially operational on the following devices:
 		
 		\begin{itemize}
 			\item Mac OS laptop
@@ -310,14 +329,16 @@
 		\noindent
 		Even though the MosCoW method only specified that the system should function on a Windows operating system, the device functions on a multitude of devices, an unforeseen feature of utilizing HID usage codes.
 			
+	\newpage
+	
 	\section{Results}
-		The specification for the project presented in this report was to construct a micro-controller based system and companion application, with some form of communication between each of the systems. The media-controller and remote controller application meet the requirements outlined in the specification as well as making use of technologies and methodologies not requested in the specification.
+		The specification for the project presented in this report was to construct a microcontroller based system and companion application, with some form of communication between each of the systems. The Media Controller and remote controller application meet the requirements outlined in the specification, as well as making use of technologies and methodologies not requested in the specification.
 			
 		\subsection{Achievements}
 			The main achievements of this project are as follows;
 			
 			\begin{itemize}
-				\item Significantly expanded knowledge of micro-controller development.
+				\item Significantly expanded knowledge of microcontroller development.
 				\item A greater understanding of USB Human Interface Devices and their operations.
 				\item A fully functional C++ media command usage table.
 				\item Further experience of Developing on the Android platform
@@ -331,54 +352,43 @@
 					\centering
 					\label{fullSystem}
 					{\includegraphics[scale = 0.5]{fullSystem}}
-					\caption{The final media-controller complete with; micro-controller, Bluetooth module and push-buttons.}
+					\caption{The final Media Controlle - microcontroller, Bluetooth module and push-buttons.}
 				\end{figure}
 			
 		\subsection{Recommendations}
-			One of the key areas of consideration when undertaking a project similar to this is the  limitations and specifications of the hardware intended to be used. Almost all micro-controllers available for purchase will be able to interface with a PC via serial communication, however only a handful of the systems can function as a USB Human Interface Device.
+			One of the key areas of consideration when undertaking a project similar to this is the  limitations and specifications of the hardware intended to be used. Almost all microcontrollers available for purchase will be able to interface with a PC via serial communication. However only a handful of the systems can function as a USB Human Interface Device.
 			
-			Another consideration for similar systems is the method of remote communication between the media-controller and the user. For the purposes of this project Bluetooth provided an adequate service for linking the application to the device. It may be worth considering technologies like Wi-Fi or ZigBee to allow the system to be accessed by multiple user at once or over a wireless local area network. 
+			Another consideration for similar systems is the method of remote communication between the Media Controller and the user. For the purposes of this project Bluetooth provided an adequate service for linking the application to the device. It may be worth considering technologies like Wi-Fi or ZigBee to allow the system to be accessed by multiple user at once or over a wireless local area network. 
 			
 		\subsection{Future Work}
-			Though the project is complete and fulfilled all the aims and goals highlighted in the specification, their is still potential for additional functionality to be added to the deliverables.\\
+			Though the project is complete and fulfilled all the aims and goals highlighted in the specification, there is still potential for additional functionality to be added to the deliverables.
 			
-			\noindent
-			One potential idea would be to incorporate different operation modes into the controller, allowing a user to change the functionality of the systems buttons depending on what task they were working on. Examples include a mode for text processing where the buttons will provide short-cuts for functions like cut, copy and paste, or a mode for photo editing software where the buttons will correspond to a editing tool.\\
+			One potential idea would be to incorporate different operation modes into the controller, allowing a user to change the functionality of the systems buttons, depending on which task they were working on. Examples include a mode for text processing where the buttons would provide short cuts for functions such as cut, copy and paste, or a mode for photo editing software where the buttons will correspond to an editing tool.
 			
-			\noindent
-			There is also potential to add additional functionality to the mobile application. One thought was to include a PC security feature where the host PC would automatically lock if the physical system lost connection with the mobile device, i.e. if a user walked away from their computer with their phone in their pocket. This would allow a user simply walk away from their PC, without the need to lock their PC or worry about other accessing it while they are away from their desk.
+			There is also potential to add additional functionality to the mobile application. One thought was to include a PC security feature where the host PC would automatically lock if the physical system lost connection with the mobile device, i.e. if a user walked away from their computer with their phone in their pocket. This would allow a user simply walk away from their PC, without the need to lock their PC or worry about others accessing it while they are away from their desk.
+		
+	
 		
 	\section{Conclusion}
-		The aim of this project was to produce a media-controller and companion application and investigate communication between both systems. 
+		The aim of this project was to produce a Media Controller and companion application and investigate communication between both systems. 
 		
 		Agile development methods like MoSCoW and Gantt charts were utilized to ensure the project stayed on scheduled and time wasted developing non-crucial features of the systems. 
 		
 		Even though it was never intended during the project's inception, a great deal of effort went into the research of how USB devices work and how they are developed. While the use of HID technology was not the only way to complete this project, it appeared to be the most fit for purpose.
 		
-		Overall, the project can be considered a success, all original goals that were set out
-		were achieved. Though the development of the system was challenging at times, this kept the project engaging and entertaining. 
+		Overall, the project can be considered a success - all of the original goals that were set out were achieved. Though the development of the system was challenging at times, this kept the project engaging and entertaining. 
 		
 	\section{Evaluation of Achievement}
-		Having never worked with micro-controllers previously, the open ended specification of this project was extremely daunting. This partially why I opted to construct a media-controller, I felt that building a device that I would use everyday would motivate me to research the best methods to use in the project. 
+		Having never worked with microcontrollers previously, the open ended specification of this project was extremely daunting. This is partially why I opted to construct a Media Controller. I felt that building a device that I could use everyday would motivate me to research the best methods for implementation. 
 		
-		While the specification for this project focused mainly communication methods, I got highly engrossed in learning about USB devices, their configuration and specifications. I found researching HIDs especially interesting, as they are devices that get used 
-				
-	
-	
-%	\begin{figure}[]
-%		\centering
-%		\label{leonardo}
-%		{\includegraphics[scale = 0.15]{leonardo}}
-%		\caption{//ToDo - Write a caption}
-%	\end{figure}
-	
-%	\begin{figure}[]
-%		\centering
-%		\label{breadboard}
-%		{\includegraphics[scale = 0.15]{breadboard}}
-%		\caption{//ToDo - Write a caption}
-%	\end{figure}
-			
+		While the specification for this project focused mainly communication methods, I got highly engrossed in learning about USB devices, their configuration and specifications. I found researching HIDs especially interesting, as they are devices that I use every day and yet had very little knowledge of how they operated. 
+		
+		One aspect of the project I found challenging was the lack of examples available to me. Many people have built Media Controllers but either their code was too outdated to learn from or they had gone about it in a completely different manner. While this did slow down the development process, it did make it all the more satisfying when the system was finally complete.
+		
+		If I was redoing this project with the knowledge I have now, I would have started the development of the mobile application much earlier into the projects life cycle. While the application produced is entirely functional, I felt that could be improved greatly with just a little more time for polish. 
+		
+		I thoroughly enjoyed this project, I was given the freedom to research and develop a system that I found interesting, while learning about physical computing and communication technologies.
+					
 	\newpage	
 		
 	\addcontentsline{toc}{section}{References}
@@ -391,7 +401,7 @@
 
 	\begin{appendices}
 
-		\section{Arduino Media-Controller Source Code}
+		\section{Arduino Media Controller Source Code}
 			\lstinputlisting[title = mediaController\_debounce.ino, nolol]{../../ARDUINO/mediaController/mediaController.ino}
 			
 		\newpage
@@ -411,7 +421,6 @@
 			\newpage
 			
 			\lstinputlisting[title = BluetoothHandler.java, nolol]{../../ANDROID/MediaController/app/src/main/java/uk/co/sam/mediacontroller/BluetoothHandler.java}
-			
 			
 		\section{Bluetooth Connection Activity Diagram}
 			\begin{figure}[H]
